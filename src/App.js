@@ -49,6 +49,7 @@ function App() {
       <Header />
       <main className="main">
         <WeatherCard day={false} type="night" />
+        Today is 75°F / You may want to wear:
         <section className="card_section" id="card-section">
           {defaultClothingItems.map((item) => (
             <ItemCard item={item} />
