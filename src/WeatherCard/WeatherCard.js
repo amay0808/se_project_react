@@ -17,11 +17,23 @@ const weatherOptions = [
     day: false,
     type: "cloud",
   },
-  { url: require("../images/night/foggynight.svg"), day: false, type: "fog" },
-  { url: require("../images/night/night.svg"), day: false, type: "night" },
-  { url: require("../images/night/snowynight.svg"), day: false, type: "snow" },
   {
-    url: require("../images/night/stormynight.svg"),
+    url: require("../images/night/foggynight.svg").default,
+    day: false,
+    type: "fog",
+  },
+  {
+    url: require("../images/night/night.svg").default,
+    day: false,
+    type: "night",
+  },
+  {
+    url: require("../images/night/snowynight.svg").default,
+    day: false,
+    type: "snow",
+  },
+  {
+    url: require("../images/night/stormynight.svg").default,
     day: false,
     type: "storm",
   },
