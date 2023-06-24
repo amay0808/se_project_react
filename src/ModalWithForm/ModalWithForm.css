@@ -17,3 +17,13 @@
   border-radius: 20px;
   padding: 34px 36px;
 }
+.modal__close-button {
+  background: none;
+  /* position: absolute; */
+  border: none;
+  top: 22px;
+  height: 16px;
+  width: 16px;
+  z-index: 1;
+  cursor: pointer;
+}
