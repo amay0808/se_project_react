@@ -12,13 +12,16 @@
 
 .modal__content {
   background-color: white;
-  max-width: 496px;
-  width: 100%;
+  position: relative;
+  width: 496px;
+  height: 436px;
+  max-width: 100%;
   border-radius: 20px;
   padding: 34px 36px;
 }
 .modal__close-button {
   background: transparent url("../images/close.svg");
+  position: absolute;
   border: none;
   top: 22px;
   right: 30px;
@@ -26,4 +29,51 @@
   width: 16px;
   z-index: 1;
   cursor: pointer;
+}
+
+.input__group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.input__label {
+  font-family: "Cabinet Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 0 0 8px 0;
+  padding: 0;
+}
+.form__input {
+  border: none;
+  border-bottom: 1px solid #000000;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.form__input::placeholder {
+  font-family: "Cabinet Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.modal__title {
+  font-family: "Cabinet Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+}
+.add__garment-button {
+  color: white;
+  margin-top: 12px;
+  width: 124px;
+  height: 36px;
+  background: #000000;
 }

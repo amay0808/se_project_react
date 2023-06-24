@@ -37,27 +37,56 @@ function App() {
       <Footer />
       {activeModal === "create" && (
         <ModalWithForm title="New Garment" onClose={handleCloseModal}>
-          <label>
-            name <input type="text" name="name" minLength="1" maxLength="30" />
-          </label>
-          <label>
-            Image <input type="url" name="name" minLength="1" maxLength="30" />
-          </label>
-          <p>Select the weather type: </p>
-          <div>
-            <div>
-              <input type="radio" id="hot" value="hot" />
-              <label>Hot</label>
-            </div>
-            <div>
-              <input type="radio" id="warm" value="warm" />
-              <label>Warm</label>
-            </div>
-            <div>
-              <input type="radio" id="cold" value="cold" />
-              <label>Cold</label>
-            </div>
-          </div>
+          <fieldset className="input__group">
+            <label htmlFor="name" className="input__label">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              className="form__input"
+              placeholder="Name"
+            />
+            <label htmlFor="url" className="input__label">
+              Image
+            </label>
+            <input
+              id="url"
+              type="url"
+              className="form__input"
+              placeholder="Image URL"
+            />
+          </fieldset>
+          <fieldset className="input__group">
+            <span className="input__label">Select the weather type:</span>
+            <label htmlFor="weather-hot" className="radio__label">
+              <input
+                type="radio"
+                name="weatherType"
+                id="weather-hot"
+                className="radio__input"
+              />
+              Hot
+            </label>
+            <label htmlFor="weather-warm" className="radio__label">
+              <input
+                type="radio"
+                name="weatherType"
+                id="weather-warm"
+                className="radio__input"
+              />
+              Warm
+            </label>
+            <label htmlFor="weather-cold" className="radio__label">
+              <input
+                type="radio"
+                name="weatherType"
+                id="weather-cold"
+                className="radio__input"
+              />
+              Cold
+            </label>
+          </fieldset>
         </ModalWithForm>
       )}
       {activeModal === "preview" && (
