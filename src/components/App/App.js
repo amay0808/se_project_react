@@ -1,18 +1,14 @@
-import logo from "./logo.svg";
+import { useState, useEffect } from "react";
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Footer from "../Footer/Footer";
+import ItemModal from "../ItemModal/ItemModal";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./App.css";
-import Header from "./Header/Header";
-import Main from "./Main/Main";
-import Footer from "./Footer/Footer";
-import ModalWithForm from "./ModalWithForm/ModalWithForm";
-import { useEffect, useState } from "react";
-import ItemModal from "./ItemModal/ItemModal";
-import {
-  getForecastWeather,
-  parseWeatherData,
-} from "./Header/utils/weatherapi";
+import { getForecastWeather, parseWeatherData } from "../Utils/Weatherapi";
 
 function App() {
-  const weatherTemp = "75°F";
+  // const weatherTemp = "75°F";
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setselectedCard] = useState({});
   const [temp, setTemp] = useState(0);
