@@ -1,14 +1,21 @@
 import "./Header.css";
 
-const Header = ({ onCreateModal }) => {
+const Header = ({ onCreateModal, location }) => {
+  const currentDate = new Date().toLocaleString("default", {
+    month: "long",
+    day: "numeric",
+  });
+
   console.log("Header");
+
   return (
     <header className="header">
       <div className="header__logo">
         <div>
           <img src={require("../images/logo.svg").default} alt="logo" />
         </div>
-        <div>Date</div>
+        <div>{currentDate}</div>
+        <div>{location}</div>
       </div>
       <div className="header__avatar-logo">
         <div>
@@ -24,4 +31,5 @@ const Header = ({ onCreateModal }) => {
     </header>
   );
 };
+
 export default Header;

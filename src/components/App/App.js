@@ -8,7 +8,6 @@ import "./App.css";
 import { getForecastWeather, parseWeatherData } from "../Utils/Weatherapi";
 
 function App() {
-  // const weatherTemp = "75°F";
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setselectedCard] = useState({});
   const [temp, setTemp] = useState(0);
@@ -32,7 +31,7 @@ function App() {
   console.log(temp);
   return (
     <div>
-      <Header onCreateModal={handleCreateModal} />
+      <Header onCreateModal={handleCreateModal} location="Merced" />
       <Main weatherTemp={temp} onSelectCard={handleSelectedCard} />
       <Footer />
       {activeModal === "create" && (
@@ -59,33 +58,39 @@ function App() {
           </fieldset>
           <fieldset className="input__group">
             <span className="input__label">Select the weather type:</span>
-            <label htmlFor="weather-hot" className="radio__label">
+            <div className="radio__button">
               <input
                 type="radio"
                 name="weatherType"
                 id="weather-hot"
                 className="radio__input"
               />
-              Hot
-            </label>
-            <label htmlFor="weather-warm" className="radio__label">
+              <label htmlFor="weather-hot" className="radio__label">
+                Hot
+              </label>
+            </div>
+            <div className="radio__button">
               <input
                 type="radio"
                 name="weatherType"
                 id="weather-warm"
                 className="radio__input"
               />
-              Warm
-            </label>
-            <label htmlFor="weather-cold" className="radio__label">
+              <label htmlFor="weather-warm" className="radio__label">
+                Warm
+              </label>
+            </div>
+            <div className="radio__button">
               <input
                 type="radio"
                 name="weatherType"
                 id="weather-cold"
                 className="radio__input"
               />
-              Cold
-            </label>
+              <label htmlFor="weather-cold" className="radio__label">
+                Cold
+              </label>
+            </div>
           </fieldset>
         </ModalWithForm>
       )}

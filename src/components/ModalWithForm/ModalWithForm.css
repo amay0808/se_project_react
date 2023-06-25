@@ -80,6 +80,15 @@
   height: 36px;
   background: #000000;
 }
-.radio__label {
-  color: #000000;
+.radio__input {
+  display: none;
+}
+.radio__label::before {
+  content: url("../images/Ellipse\ 19.svg");
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+.radio__input:checked + .radio__label::before {
+  content: url("../images/Ellipse\ 20.svg");
 }

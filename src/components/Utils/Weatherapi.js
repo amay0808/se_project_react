@@ -1,25 +1,27 @@
-const latitude = 37.325954;
-const longitude = -120.499992;
+const latitude = 37.3022;
+const longitude = -120.4829;
 const APIkey = "ec819665b8e9b69fc9cee9d11ea26e49";
 
-export const getForecastWeather = () => {
-  const weatherApi = fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
-  ).then((res) => {
-    console.log(res);
-    if (res.ok) {
-      return res.json();
+export const getForecastWeather = async () => {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     } else {
-      return Promise.reject(`Error: ${res.status}`);
+      const data = await response.json();
+      return data;
     }
-  });
-  return weatherApi;
+  } catch (error) {
+    console.error("An error occurred while fetching the weather data", error);
+    throw error;
+  }
 };
 
 export const parseWeatherData = (data) => {
-  console.log(data);
   const main = data.main;
   const temperature = main && main.temp;
-  console.log(Math.ceil(temperature));
   return Math.ceil(temperature);
 };
