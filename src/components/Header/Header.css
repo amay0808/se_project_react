@@ -16,3 +16,18 @@
   gap: 20px;
   align-items: center;
 }
+.add__clothes-button {
+  border: none;
+  background: none;
+  font-family: "Cabinet Grotesk";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  cursor: pointer;
+}
+.profile__name {
+  font-family: "Cabinet Grotesk";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+}

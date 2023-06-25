@@ -1,0 +1,21 @@
+.item__close-button {
+  background: url("../images/close.svg");
+  position: absolute;
+  border: none;
+  top: 20px;
+  right: 28px;
+  height: 16px;
+  width: 16px;
+  z-index: 1;
+  cursor: pointer;
+}
+.item__modal-content {
+  background-color: white;
+  position: relative;
+  width: 496px;
+  max-width: 100%;
+  border-radius: 20px;
+  padding: 24px;
+  overflow-y: auto;
+  max-height: calc(100% - 48px);
+}
