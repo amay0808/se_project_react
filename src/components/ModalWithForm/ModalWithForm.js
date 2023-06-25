@@ -1,6 +1,4 @@
 import "./ModalWithForm.css";
-import ellipse from "../images/Ellipse 19.svg";
-import ellipse2 from "../images/Ellipse 20.svg";
 const ModalWithForm = ({
   children,
   buttonText = "Add garment",

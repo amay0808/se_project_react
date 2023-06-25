@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./App.css";
-import { getForecastWeather, parseWeatherData } from "../Utils/Weatherapi";
+import { getForecastWeather, parseWeatherData } from "../utils/Weatherapi";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
