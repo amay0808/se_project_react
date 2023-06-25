@@ -20,7 +20,7 @@
   padding: 34px 36px;
 }
 .modal__close-button {
-  background: transparent url("../images/close.svg");
+  background: url("../images/close.svg");
   position: absolute;
   border: none;
   top: 20px;
@@ -46,7 +46,7 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  margin: 0 0 8px 0;
+  margin: 0 0 0 0;
   padding: 0;
 }
 .form__input {
@@ -76,9 +76,11 @@
 .add__garment-button {
   color: white;
   margin-top: 32px;
+  margin-bottom: 36px;
   width: 124px;
   height: 36px;
   background: #000000;
+  cursor: pointer;
 }
 .radio__input {
   display: none;
