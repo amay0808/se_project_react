@@ -4,7 +4,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import "./App.css";
+import "./app.css";
 import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
 
 function App() {
