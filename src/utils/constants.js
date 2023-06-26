@@ -36,3 +36,55 @@ export const defaultClothingItems = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Coat.png?etag=298717ed89d5e40b1954a1831ae0bdd4",
   },
 ];
+export const weatherOptions = [
+  {
+    url: "../images/day/cloudy.svg",
+    day: true,
+    type: "cloudy",
+  },
+  {
+    url: "../images/day/foggy.svg",
+    day: true,
+    type: "foggy",
+  },
+  {
+    url: "../images/day/snowy.svg",
+    day: true,
+    type: "snowy",
+  },
+  {
+    url: "../images/day/stormy.svg",
+    day: true,
+    type: "stormy",
+  },
+  {
+    url: "../images/day/sunny.svg",
+    day: true,
+    type: "sunny",
+  },
+  {
+    url: "../images/night/cloudynight.svg",
+    day: false,
+    type: "cloud",
+  },
+  {
+    url: "../images/night/foggynight.svg",
+    day: false,
+    type: "fog",
+  },
+  {
+    url: "../images/night/night.svg",
+    day: false,
+    type: "night",
+  },
+  {
+    url: "../images/night/snowynight.svg",
+    day: false,
+    type: "snow",
+  },
+  {
+    url: "../images/night/stormynight.svg",
+    day: false,
+    type: "storm",
+  },
+];
