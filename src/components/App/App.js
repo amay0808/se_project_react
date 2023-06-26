@@ -22,12 +22,16 @@ function App() {
     setselectedCard(card);
   };
   useEffect(() => {
-    getForecastWeather().then((data) => {
-      console.log(data);
-      const temperature = parseWeatherData(data);
-      setTemp(temperature);
-    });
-  }, []);
+    getForecastWeather()
+      .then((data) => {
+        console.log(data);
+        const temperature = parseWeatherData(data);
+        setTemp(temperature);
+      })
+      .catch((error) => {
+        console.error("Error occurred while getting forecast weather:", error);
+      });
+  }, []); //
   console.log(temp);
   return (
     <div>
