@@ -1,5 +1,5 @@
 import React from "react";
-import "./ItemCard.css";
+import "../ItemCard/ItemCard.css";
 
 function ItemCard({ onSelectCard, item }) {
   return (
