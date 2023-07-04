@@ -1,3 +1,4 @@
+import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -5,7 +6,6 @@ import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./app.css";
-import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
 import { CurrentTemperatureUnitContext } from "../Contexts/CurrentTemperatureUnitContexts";
 
 function App() {
@@ -38,6 +38,7 @@ function App() {
         console.error("Error occurred while getting forecast weather:", error);
       });
   }, []);
+
   console.log(CurrentTemperatureUnit);
   return (
     <div>
