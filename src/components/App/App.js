@@ -40,6 +40,15 @@ function App() {
     if (CurrentTemperatureUnit === "F") setCurrentTemperatureUnit("C");
   };
 
+  // const handleDeleteItem = (item) => {
+  //   deleteItemAPI(item)
+  //     .then(() => {
+  //       setClothingItems((prevItems) => prevItems.filter((i) => i !== item));
+  //       handleCloseModal();
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
+
   useEffect(() => {
     getForecastWeather()
       .then((data) => {
@@ -80,8 +89,15 @@ function App() {
             onAddItem={onAddItem}
           />
         )}
-        {activeModal === "preview" && (
+        {/* {activeModal === "preview" && (
           <ItemModal selectedCard={selectedCard} onClose={handleCloseModal} />
+        )} */}
+        {activeModal === "preview" && (
+          <ItemModal
+            selectedCard={selectedCard}
+            onClose={handleCloseModal}
+            // onDelete={handleDeleteItem}
+          />
         )}
       </CurrentTemperatureUnitContext.Provider>
     </div>

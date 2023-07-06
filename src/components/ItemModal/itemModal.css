@@ -19,3 +19,17 @@
   overflow-y: auto;
   max-height: calc(100% - 48px);
 }
+.item__delete-button {
+  font-family: "Cabinet Grotesk";
+  color: #ff4d00;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin-top: 20px;
+}
