@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
+// import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./app.css";
 import { CurrentTemperatureUnitContext } from "../Contexts/CurrentTemperatureUnitContexts";
 import { Switch, Route } from "react-router-dom";
@@ -14,24 +14,32 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setselectedCard] = useState({});
   const [temp, setTemp] = useState(0);
+  const [clothingItems, setClothingItems] = useState([]);
   const [CurrentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
   const handleCreateModal = () => {
     setActiveModal("create");
   };
+
   const handleCloseModal = () => {
     setActiveModal("");
   };
+
   const handleSelectedCard = (card) => {
     setActiveModal("preview");
     setselectedCard(card);
   };
+
   const onAddItem = (values) => {
     console.log(values);
+    setClothingItems([values, ...clothingItems]);
   };
+
   const handleToggleSwitchChange = () => {
     if (CurrentTemperatureUnit === "C") setCurrentTemperatureUnit("F");
     if (CurrentTemperatureUnit === "F") setCurrentTemperatureUnit("C");
   };
+
   useEffect(() => {
     getForecastWeather()
       .then((data) => {
@@ -45,6 +53,7 @@ function App() {
   }, []);
 
   console.log(CurrentTemperatureUnit);
+
   return (
     <div>
       <CurrentTemperatureUnitContext.Provider
