@@ -51,7 +51,7 @@ function App() {
           <Route exact path="/">
             <Main weatherTemp={temp} onSelectCard={handleSelectedCard} />
           </Route>
-          <Route path="/Profile">
+          <Route path="/profile">
             <div>
               Profile
               <Main weatherTemp={temp} onSelectCard={handleSelectedCard} />
