@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ModalWithForm from "../components/ModalWithForm/ModalWithForm";
+
 const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
   const [name, setName] = useState("");
   const handleNameChange = (e) => {
@@ -9,12 +10,18 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
   const [link, setUrl] = useState("");
   const handleUrlChange = (e) => {
     console.log(e.target.value);
-    setName(e.target.value);
+    setUrl(e.target.value);
+  };
+  const [weatherType, setWeatherType] = useState("");
+  const handleWeatherChange = (e) => {
+    console.log(e.target.value);
+    setWeatherType(e.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddItem({ name, link });
+    onAddItem({ name, link, weatherType });
   };
+
   return (
     <ModalWithForm
       title="New Garment"
@@ -55,7 +62,9 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
             type="radio"
             name="weatherType"
             id="weather-hot"
+            value="hot"
             className="radio__input"
+            onChange={handleWeatherChange}
           />
           <label htmlFor="weather-hot" className="radio__label">
             Hot
@@ -66,7 +75,9 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
             type="radio"
             name="weatherType"
             id="weather-warm"
+            value="warm"
             className="radio__input"
+            onChange={handleWeatherChange}
           />
           <label htmlFor="weather-warm" className="radio__label">
             Warm
@@ -77,7 +88,9 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
             type="radio"
             name="weatherType"
             id="weather-cold"
+            value="cold"
             className="radio__input"
+            onChange={handleWeatherChange}
           />
           <label htmlFor="weather-cold" className="radio__label">
             Cold
