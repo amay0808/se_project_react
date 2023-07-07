@@ -58,7 +58,7 @@ function App() {
         console.error("Error occurred while getting items:", error);
       });
   }, []);
-  //Add Item Function
+
   const onAddItem = (values) => {
     postItem(values)
       .then((newItem) => {
@@ -68,7 +68,6 @@ function App() {
         console.error("Error occurred while adding item:", error);
       });
   };
-  //Delete function
   const onDeleteItem = (_id) => {
     console.log(_id);
     deleteItem(_id)
@@ -88,12 +87,20 @@ function App() {
         <Header onCreateModal={handleCreateModal} location="Merced" />
         <Switch>
           <Route exact path="/">
-            <Main weatherTemp={temp} onSelectCard={handleSelectedCard} />
+            <Main
+              weatherTemp={temp}
+              onSelectCard={handleSelectedCard}
+              clothingItems={clothingItems}
+            />
           </Route>
           <Route path="/profile">
             <div>
               Profile
-              <Main weatherTemp={temp} onSelectCard={handleSelectedCard} />
+              <Main
+                weatherTemp={temp}
+                onSelectCard={handleSelectedCard}
+                clothingItems={clothingItems}
+              />
             </div>
           </Route>
         </Switch>

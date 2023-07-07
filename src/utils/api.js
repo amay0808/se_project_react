@@ -2,7 +2,7 @@ const baseUrl = "http://localhost:3001";
 
 // GET /items
 export function getItems() {
-  return fetch(`${baseUrl}/items`).then((response) => {
+  return fetch(`${baseUrl}/items/`).then((response) => {
     if (!response.ok) {
       throw new Error("Failed to fetch items");
     }
