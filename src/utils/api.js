@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3001";
+const baseUrl = "https://my-json-server.typicode.com/amay0808/se_project_react";
 
 // GET /items
 export function getItems() {
