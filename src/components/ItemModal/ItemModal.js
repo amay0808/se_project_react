@@ -4,7 +4,8 @@ const ItemModal = ({ selectedCard, onClose, onDelete }) => {
   console.log(`itemModal`);
 
   const handleDelete = () => {
-    onDelete(selectedCard);
+    console.log(selectedCard);
+    onDelete(selectedCard._id);
   };
 
   return (
@@ -17,8 +18,10 @@ const ItemModal = ({ selectedCard, onClose, onDelete }) => {
         ></button>
 
         <img src={selectedCard.link} alt={selectedCard.name} />
-        <div>{selectedCard.name}</div>
-        <div>Weather type: {selectedCard.weather}</div>
+        <div className="item">{selectedCard.name}</div>
+        <div className="weather__type-text">
+          Weather type: {selectedCard.weather}
+        </div>
         <button
           className="item__delete-button"
           type="button"

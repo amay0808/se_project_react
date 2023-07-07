@@ -4,11 +4,11 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
-// import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./app.css";
 import { CurrentTemperatureUnitContext } from "../Contexts/CurrentTemperatureUnitContexts";
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../../AddItemModal/AddItemModal";
+import { getItems, postItem, deleteItem } from "../../utils/api";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -30,24 +30,10 @@ function App() {
     setselectedCard(card);
   };
 
-  const onAddItem = (values) => {
-    console.log(values);
-    setClothingItems([values, ...clothingItems]);
-  };
-
   const handleToggleSwitchChange = () => {
     if (CurrentTemperatureUnit === "C") setCurrentTemperatureUnit("F");
     if (CurrentTemperatureUnit === "F") setCurrentTemperatureUnit("C");
   };
-
-  // const handleDeleteItem = (item) => {
-  //   deleteItemAPI(item)
-  //     .then(() => {
-  //       setClothingItems((prevItems) => prevItems.filter((i) => i !== item));
-  //       handleCloseModal();
-  //     })
-  //     .catch((err) => console.error(err));
-  // };
 
   useEffect(() => {
     getForecastWeather()
@@ -62,6 +48,37 @@ function App() {
   }, []);
 
   console.log(CurrentTemperatureUnit);
+  // Fetch items from the server
+  useEffect(() => {
+    getItems()
+      .then((items) => {
+        setClothingItems(items);
+      })
+      .catch((error) => {
+        console.error("Error occurred while getting items:", error);
+      });
+  }, []);
+  //Add Item Function
+  const onAddItem = (values) => {
+    postItem(values)
+      .then((newItem) => {
+        setClothingItems([newItem, ...clothingItems]);
+      })
+      .catch((error) => {
+        console.error("Error occurred while adding item:", error);
+      });
+  };
+  //Delete function
+  const onDeleteItem = (_id) => {
+    console.log(_id);
+    deleteItem(_id)
+      .then(() => {
+        setClothingItems(clothingItems.filter((item) => item._id !== _id));
+      })
+      .catch((error) => {
+        console.error("Error occurred while deleting item:", error);
+      });
+  };
 
   return (
     <div>
@@ -89,14 +106,11 @@ function App() {
             onAddItem={onAddItem}
           />
         )}
-        {/* {activeModal === "preview" && (
-          <ItemModal selectedCard={selectedCard} onClose={handleCloseModal} />
-        )} */}
         {activeModal === "preview" && (
           <ItemModal
             selectedCard={selectedCard}
             onClose={handleCloseModal}
-            // onDelete={handleDeleteItem}
+            onDelete={onDeleteItem} // Pass the delete function to ItemModal
           />
         )}
       </CurrentTemperatureUnitContext.Provider>
