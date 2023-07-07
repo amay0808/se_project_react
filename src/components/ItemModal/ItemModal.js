@@ -4,7 +4,7 @@ const ItemModal = ({ selectedCard, onClose, onDelete }) => {
   console.log(`itemModal`);
   const handleDelete = () => {
     console.log(selectedCard);
-    onDelete(selectedCard._id);
+    onDelete(selectedCard.id);
   };
 
   return (

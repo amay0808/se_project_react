@@ -53,6 +53,7 @@ function App() {
     getItems()
       .then((items) => {
         setClothingItems(items);
+        console.log(items);
       })
       .catch((error) => {
         console.error("Error occurred while getting items:", error);
@@ -68,11 +69,11 @@ function App() {
         console.error("Error occurred while adding item:", error);
       });
   };
-  const onDeleteItem = (_id) => {
-    console.log(_id);
-    deleteItem(_id)
+  const onDeleteItem = (id) => {
+    console.log(id);
+    deleteItem(id)
       .then(() => {
-        setClothingItems(clothingItems.filter((item) => item._id !== _id));
+        setClothingItems(clothingItems.filter((item) => item.id !== id));
       })
       .catch((error) => {
         console.error("Error occurred while deleting item:", error);
