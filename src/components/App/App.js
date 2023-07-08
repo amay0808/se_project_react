@@ -63,17 +63,21 @@ function App() {
   const onAddItem = (values) => {
     postItem(values)
       .then((newItem) => {
-        setClothingItems([newItem, ...clothingItems]);
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
       })
       .catch((error) => {
         console.error("Error occurred while adding item:", error);
       });
   };
+
   const onDeleteItem = (id) => {
     console.log(id);
     deleteItem(id)
       .then(() => {
-        setClothingItems(clothingItems.filter((item) => item.id !== id));
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item.id !== id)
+        );
+        handleCloseModal(); // Close the modal after deleting the item
       })
       .catch((error) => {
         console.error("Error occurred while deleting item:", error);
@@ -118,7 +122,7 @@ function App() {
           <ItemModal
             selectedCard={selectedCard}
             onClose={handleCloseModal}
-            onDelete={onDeleteItem} // Pass the delete function to ItemModal
+            onDelete={onDeleteItem}
           />
         )}
       </CurrentTemperatureUnitContext.Provider>
