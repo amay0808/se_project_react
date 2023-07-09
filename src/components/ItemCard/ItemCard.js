@@ -2,6 +2,7 @@ import React from "react";
 import "./itemCard.css";
 
 function ItemCard({ onSelectCard, item }) {
+  console.log("Rendering ItemCard with item:", item);
   return (
     <div className="card-container">
       <div className="card">

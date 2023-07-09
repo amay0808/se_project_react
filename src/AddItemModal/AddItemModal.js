@@ -19,7 +19,8 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddItem({ name, link, weatherType });
+    console.log("Form submit:", { name, imageUrl: link, weather: weatherType }); // Log the submitted form data
+    onAddItem({ name, imageUrl: link, weather: weatherType });
   };
 
   return (

@@ -53,6 +53,7 @@ function App() {
     getItems()
       .then((items) => {
         setClothingItems(items);
+        console.log(items);
       })
       .catch((error) => {
         console.error("Error occurred while getting items:", error);
@@ -62,7 +63,8 @@ function App() {
   const onAddItem = (values) => {
     postItem(values)
       .then((newItem) => {
-        setClothingItems([newItem, ...clothingItems]);
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
+        handleCloseModal(); // Close the modal after adding the item
       })
       .catch((error) => {
         console.error("Error occurred while adding item:", error);
@@ -75,6 +77,7 @@ function App() {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item.id !== id)
         );
+        handleCloseModal(); // Close the modal after deleting the item
       })
       .catch((error) => {
         console.error("Error occurred while deleting item:", error);
@@ -119,7 +122,7 @@ function App() {
           <ItemModal
             selectedCard={selectedCard}
             onClose={handleCloseModal}
-            onDelete={onDeleteItem} // Pass the delete function to ItemModal
+            onDelete={onDeleteItem}
           />
         )}
       </CurrentTemperatureUnitContext.Provider>
