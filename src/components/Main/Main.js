@@ -25,10 +25,17 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
         return "cold";
       }
     }
+    return null;
   }, [CurrentTemperatureUnit, temp]);
+  console.log("Clothing items:", clothingItems); // Log the clothing items received as props
   const filteredCards = clothingItems.filter((item) => {
-    return item.weather.toLocaleLowerCase() === weatherType;
+    return (
+      item.weather &&
+      weatherType &&
+      item.weather.toLowerCase() === weatherType.toLowerCase()
+    );
   });
+
   console.log(filteredCards);
   return (
     <main className="main">

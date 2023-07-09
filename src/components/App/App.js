@@ -64,6 +64,7 @@ function App() {
     postItem(values)
       .then((newItem) => {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
+        handleCloseModal(); // Close the modal after adding the item
       })
       .catch((error) => {
         console.error("Error occurred while adding item:", error);
