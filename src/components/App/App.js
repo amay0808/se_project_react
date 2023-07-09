@@ -5,7 +5,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import "./app.css";
-import { CurrentTemperatureUnitContexts } from "../../contexts/CurrentTemperatureUnitContexts";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../../AddItemModal/AddItemModal";
 import { getItems, postItem, deleteItem } from "../../utils/api";
