@@ -1,14 +1,14 @@
 import React from "react";
-import "../Profile/ClothingSection.css";
+import "../Profile/clothingsection.css";
 
 function ClothesSection({ clothingItems }) {
   return (
-    <div>
+    <div className="card-container">
       <h2>Clothing Items</h2>
       {clothingItems.map((item) => (
-        <div key={item.id}>
-          <h3>{item.name}</h3>
-          <img src={item.imageUrl} alt={item.name} />
+        <div key={item.id} className="card">
+          <span className="card__text">{item.name}</span>
+          <img className="card__image" src={item.imageUrl} alt={item.name} />
         </div>
       ))}
     </div>

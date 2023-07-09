@@ -1,4 +1,4 @@
-// Sidebar.js
+import "../Profile/sidebar.css";
 import React from "react";
 
 function Sidebar({ user }) {
