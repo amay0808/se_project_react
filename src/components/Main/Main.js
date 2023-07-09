@@ -7,6 +7,10 @@ import { CurrentTemperatureUnitContext } from "../Contexts/CurrentTemperatureUni
 function Main({ weatherTemp, onSelectCard, clothingItems }) {
   const { CurrentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const temp = weatherTemp?.temperature?.[CurrentTemperatureUnit] || 999;
+
+  console.log("Temperature:", temp);
+  console.log("CurrentTemperatureUnit:", CurrentTemperatureUnit);
+
   const weatherType = useMemo(() => {
     if (CurrentTemperatureUnit === "F") {
       if (temp >= 86) {
@@ -27,7 +31,10 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
     }
     return null;
   }, [CurrentTemperatureUnit, temp]);
+
+  console.log("Weather type:", weatherType);
   console.log("Clothing items:", clothingItems); // Log the clothing items received as props
+
   const filteredCards = clothingItems.filter((item) => {
     return (
       item.weather &&
@@ -36,7 +43,8 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
     );
   });
 
-  console.log(filteredCards);
+  console.log("Filtered clothing items:", filteredCards);
+
   return (
     <main className="main">
       <WeatherCard day={false} type="night" weatherTemp={temp} />

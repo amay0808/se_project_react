@@ -31,8 +31,11 @@ function App() {
   };
 
   const handleToggleSwitchChange = () => {
-    if (CurrentTemperatureUnit === "C") setCurrentTemperatureUnit("F");
-    if (CurrentTemperatureUnit === "F") setCurrentTemperatureUnit("C");
+    if (CurrentTemperatureUnit === "C") {
+      setCurrentTemperatureUnit("F");
+    } else if (CurrentTemperatureUnit === "F") {
+      setCurrentTemperatureUnit("C");
+    }
   };
 
   useEffect(() => {
@@ -70,6 +73,7 @@ function App() {
         console.error("Error occurred while adding item:", error);
       });
   };
+
   const onDeleteItem = (id) => {
     console.log(id);
     deleteItem(id)
