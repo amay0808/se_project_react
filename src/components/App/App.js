@@ -8,6 +8,8 @@ import "./app.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import Sidebar from "../Profile/Sidebar";
+import ClothingSection from "../Profile/ClothingSection";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 
 function App() {
@@ -51,7 +53,7 @@ function App() {
   }, []);
 
   console.log(CurrentTemperatureUnit);
-  // Fetch items from the server
+
   useEffect(() => {
     getItems()
       .then((items) => {
@@ -67,7 +69,7 @@ function App() {
     postItem(values)
       .then((newItem) => {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
-        handleCloseModal(); // Close the modal after adding the item
+        handleCloseModal();
       })
       .catch((error) => {
         console.error("Error occurred while adding item:", error);
@@ -81,7 +83,7 @@ function App() {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item.id !== id)
         );
-        handleCloseModal(); // Close the modal after deleting the item
+        handleCloseModal();
       })
       .catch((error) => {
         console.error("Error occurred while deleting item:", error);
@@ -104,16 +106,13 @@ function App() {
           </Route>
           <Route path="/profile">
             <div>
-              Profile
-              <Main
-                weatherTemp={temp}
-                onSelectCard={handleSelectedCard}
-                clothingItems={clothingItems}
+              <Sidebar
+                user={{ username: "John Doe", avatar: "../images/avatar.svg" }}
               />
+              <ClothingSection clothingItems={clothingItems} />
             </div>
           </Route>
         </Switch>
-
         <Footer />
         {activeModal === "create" && (
           <AddItemModal
