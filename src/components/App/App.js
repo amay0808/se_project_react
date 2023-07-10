@@ -4,13 +4,13 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
-import "./app.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Sidebar from "../Profile/Sidebar";
 import ClothingSection from "../Profile/ClothingSection";
 import { getItems, postItem, deleteItem } from "../../utils/api";
+import "./app.css";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
