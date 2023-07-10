@@ -1,7 +1,7 @@
 import "./SideBar.css";
 import React from "react";
 
-function Sidebar({ user }) {
+function SideBar({ user }) {
   const { username, avatar } = user;
 
   return (
@@ -18,4 +18,4 @@ function Sidebar({ user }) {
   );
 }
 
-export default Sidebar;
+export default SideBar;
