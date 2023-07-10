@@ -7,8 +7,8 @@ import ItemModal from "../ItemModal/ItemModal";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import Sidebar from "../Profile/Sidebar";
-import ClothingSection from "../Profile/ClothingSection";
+import Sidebar from "../Sidebar/Sidebar";
+import ClothingSection from "../Profile/Profile";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
 

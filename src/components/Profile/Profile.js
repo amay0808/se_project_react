@@ -1,5 +1,5 @@
 import React from "react";
-import "../Profile/clothingsection.css";
+import "./Profile.css";
 
 function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
   return (
