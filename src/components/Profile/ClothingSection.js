@@ -1,7 +1,8 @@
 import React from "react";
 import "../Profile/clothingsection.css";
 
-function ClothesSection({ clothingItems, onCreateModal }) {
+function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
+  // Add onSelectCard prop
   return (
     <div className="clothes-section">
       <div className="clothes-section__header">
@@ -13,7 +14,12 @@ function ClothesSection({ clothingItems, onCreateModal }) {
       {clothingItems.map((item) => (
         <div key={item.id} className="card">
           <span className="card__text">{item.name}</span>
-          <img className="card__image" src={item.imageUrl} alt={item.name} />
+          <img
+            className="card__image"
+            src={item.imageUrl}
+            alt={item.name}
+            onClick={() => onSelectCard(item)} // Add this line
+          />
         </div>
       ))}
     </div>

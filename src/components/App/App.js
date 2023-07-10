@@ -107,9 +107,13 @@ function App() {
           <Route path="/profile">
             <div>
               <Sidebar
-                user={{ username: "John Doe", avatar: "../images/avatar.svg" }}
+                user={{ avatar: "../images/avatar.svg", username: "Adrian M" }}
               />
-              <ClothingSection clothingItems={clothingItems} />
+              <ClothingSection
+                clothingItems={clothingItems}
+                onCreateModal={handleCreateModal}
+                onSelectCard={handleSelectedCard}
+              />
             </div>
           </Route>
         </Switch>
