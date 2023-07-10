@@ -1,6 +1,8 @@
 .footer {
+  font-family: "Cabinet Grotesk";
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
   padding: 0 20px;
+  background-color: brown;
 }

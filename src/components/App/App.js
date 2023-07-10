@@ -109,11 +109,13 @@ function App() {
               <Sidebar
                 user={{ avatar: "../images/avatar.svg", username: "Adrian M" }}
               />
-              <ClothingSection
-                clothingItems={clothingItems}
-                onCreateModal={handleCreateModal}
-                onSelectCard={handleSelectedCard}
-              />
+              <div className="clothing-container">
+                <ClothingSection
+                  clothingItems={clothingItems}
+                  onCreateModal={handleCreateModal}
+                  onSelectCard={handleSelectedCard}
+                />
+              </div>
             </div>
           </Route>
         </Switch>
