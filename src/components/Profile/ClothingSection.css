@@ -1,11 +1,11 @@
-.clothes-section {
+.clothes {
   padding: 0 40px 0 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.clothes-section__header {
+.clothes__header {
   width: 100%;
   display: flex;
   align-items: center;
@@ -13,7 +13,7 @@
   margin-top: 16px;
 }
 
-.clothes-section__button {
+.clothes__btn {
   height: 25px;
   color: rgba(0, 0, 0, 0.6);
   font-size: 20px;
@@ -27,11 +27,11 @@
   transition: color 0.2s ease;
 }
 
-.clothes-section__button:hover {
+.clothes__btn:hover {
   color: #000;
 }
 
-.clothes-section__title {
+.clothes__title {
   font-family: "Familjen Grotesk";
   color: #000;
   font-size: 20px;
@@ -41,10 +41,25 @@
   padding: 0;
 }
 
-.card-container {
+.cardCont {
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 17px;
 }
 
 .card {
-  width: 290px;
+  flex: 1 0 auto;
+  width: 325px;
+  height: 328px;
+  border-radius: 19px;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

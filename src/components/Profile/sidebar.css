@@ -1,33 +1,33 @@
-.sidebar {
+.profile-sidebar {
   width: 229px;
   padding: 0 0 0 40px;
   margin: 0;
 }
 
-.sidebar__info {
-  width: 229px;
-  height: 56px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-.sidebar__user-avatar {
+.profile-sidebar__user-avatar {
   width: 56px;
   height: 56px;
   margin: 0;
   padding: 0;
 }
 
-.sidebar__user-title {
+.profile-sidebar__user-title {
   color: #000;
   font-size: 20px;
   font-family: "Familjen Grotesk";
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-sidebar__info {
+  width: 229px;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0;
   padding: 0;
 }
