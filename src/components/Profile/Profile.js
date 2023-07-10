@@ -1,7 +1,7 @@
 import React from "react";
 import "./Profile.css";
 
-function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
+function Profile({ clothingItems, onCreateModal, onSelectCard }) {
   return (
     <div className="clothes">
       <div className="clothes__header">
@@ -27,4 +27,4 @@ function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
   );
 }
 
-export default ClothesSection;
+export default Profile;

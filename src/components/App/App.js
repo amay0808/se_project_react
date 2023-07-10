@@ -8,7 +8,7 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Sidebar from "../SideBar/SideBar";
-import ClothingSection from "../Profile/Profile";
+import Profile from "../Profile/Profile";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
 
@@ -110,7 +110,7 @@ function App() {
                 user={{ avatar: "../images/avatar.svg", username: "Adrian M" }}
               />
               <div className="clothing-container">
-                <ClothingSection
+                <Profile
                   clothingItems={clothingItems}
                   onCreateModal={handleCreateModal}
                   onSelectCard={handleSelectedCard}
