@@ -1,3 +1,4 @@
+// App.js
 import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
@@ -15,55 +16,38 @@ import Profile from "../Profile/Profile";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setselectedCard] = useState({});
+  const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
   const [clothingItems, setClothingItems] = useState([]);
-  const [CurrentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
-  const handleCreateModal = () => {
-    setActiveModal("create");
-  };
-
-  const handleCloseModal = () => {
-    setActiveModal("");
-  };
-
+  const handleCreateModal = () => setActiveModal("create");
+  const handleCloseModal = () => setActiveModal("");
   const handleSelectedCard = (card) => {
     setActiveModal("preview");
-    setselectedCard(card);
+    setSelectedCard(card);
   };
-
   const handleToggleSwitchChange = () => {
-    if (CurrentTemperatureUnit === "C") {
-      setCurrentTemperatureUnit("F");
-    } else if (CurrentTemperatureUnit === "F") {
-      setCurrentTemperatureUnit("C");
-    }
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
 
   useEffect(() => {
     getForecastWeather()
       .then((data) => {
-        console.log(data);
         const temperature = parseWeatherData(data);
         setTemp(temperature);
       })
-      .catch((error) => {
-        console.error("Error occurred while getting forecast weather:", error);
-      });
+      .catch((error) =>
+        console.error("Error occurred while getting forecast weather:", error)
+      );
   }, []);
-
-  console.log(CurrentTemperatureUnit);
 
   useEffect(() => {
     getItems()
-      .then((items) => {
-        setClothingItems(items);
-        console.log(items);
-      })
-      .catch((error) => {
-        console.error("Error occurred while getting items:", error);
-      });
+      .then((items) => setClothingItems(items))
+      .catch((error) =>
+        console.error("Error occurred while getting items:", error)
+      );
   }, []);
 
   const onAddItem = (values) => {
@@ -72,13 +56,12 @@ function App() {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
         handleCloseModal();
       })
-      .catch((error) => {
-        console.error("Error occurred while adding item:", error);
-      });
+      .catch((error) =>
+        console.error("Error occurred while adding item:", error)
+      );
   };
 
   const onDeleteItem = (id) => {
-    console.log(id);
     deleteItem(id)
       .then(() => {
         setClothingItems((prevItems) =>
@@ -86,18 +69,19 @@ function App() {
         );
         handleCloseModal();
       })
-      .catch((error) => {
-        console.error("Error occurred while deleting item:", error);
-      });
+      .catch((error) =>
+        console.error("Error occurred while deleting item:", error)
+      );
   };
+
   return (
-    <div className="app-container">
-      <CurrentTemperatureUnitContext.Provider
-        value={{
-          currentTemperatureUnit: CurrentTemperatureUnit,
-          handleToggleSwitchChange: handleToggleSwitchChange,
-        }}
-      >
+    <CurrentTemperatureUnitContext.Provider
+      value={{
+        currentTemperatureUnit,
+        handleToggleSwitchChange,
+      }}
+    >
+      <div className="app-container">
         <Header onCreateModal={handleCreateModal} location="Merced" />
         <Switch>
           <Route exact path="/">
@@ -114,6 +98,10 @@ function App() {
               />
               <div className="clothing-container">
                 <Profile
+                  user={{
+                    username: "Adrian M",
+                    avatar: "../images/avatar.svg",
+                  }}
                   clothingItems={clothingItems}
                   onCreateModal={handleCreateModal}
                   onSelectCard={handleSelectedCard}
@@ -142,8 +130,8 @@ function App() {
             onDelete={onDeleteItem}
           />
         )}
-      </CurrentTemperatureUnitContext.Provider>
-    </div>
+      </div>
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 

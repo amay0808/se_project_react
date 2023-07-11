@@ -1,3 +1,4 @@
+// Main.js
 import { useContext, useMemo } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
@@ -5,14 +6,14 @@ import "./main.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherTemp, onSelectCard, clothingItems }) {
-  const { CurrentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-  const temp = weatherTemp?.temperature?.[CurrentTemperatureUnit] || 999;
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+  const temp = weatherTemp?.temperature?.[currentTemperatureUnit] || 999;
 
   console.log("Temperature:", temp);
-  console.log("CurrentTemperatureUnit:", CurrentTemperatureUnit);
+  console.log("currenttemperatureunit:", currentTemperatureUnit);
 
   const weatherType = useMemo(() => {
-    if (CurrentTemperatureUnit === "F") {
+    if (currentTemperatureUnit === "F") {
       if (temp >= 86) {
         return "hot";
       } else if (temp >= 66 && temp <= 85) {
@@ -20,7 +21,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
       } else if (temp <= 65) {
         return "cold";
       }
-    } else if (CurrentTemperatureUnit === "C") {
+    } else if (currentTemperatureUnit === "C") {
       if (temp >= 30) {
         return "hot";
       } else if (temp >= 19 && temp <= 29) {
@@ -30,7 +31,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
       }
     }
     return null;
-  }, [CurrentTemperatureUnit, temp]);
+  }, [currentTemperatureUnit, temp]);
 
   console.log("Weather type:", weatherType);
   console.log("Clothing items:", clothingItems); // Log the clothing items received as props
@@ -49,7 +50,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
     <main className="main">
       <WeatherCard day={false} type="night" weatherTemp={temp} />
       <section className="card_section" id="card-section">
-        Today is {temp} {CurrentTemperatureUnit} / You may want to wear:
+        Today is {temp} {currentTemperatureUnit} / You may want to wear:
         <div className="card_items">
           {filteredCards.map((item, index) => (
             <ItemCard key={index} item={item} onSelectCard={onSelectCard} />
