@@ -12,7 +12,7 @@ import Sidebar from "../SideBar/SideBar";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import Profile from "../Profile/Profile";
+// import Profile from "../Profile/Profile";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -97,15 +97,6 @@ function App() {
                 user={{ username: "Adrian M", avatar: "../images/avatar.svg" }}
               />
               <div className="clothing-container">
-                <Profile
-                  user={{
-                    username: "Adrian M",
-                    avatar: "../images/avatar.svg",
-                  }}
-                  clothingItems={clothingItems}
-                  onCreateModal={handleCreateModal}
-                  onSelectCard={handleSelectedCard}
-                />
                 <ClothesSection
                   clothingItems={clothingItems}
                   onCreateModal={handleCreateModal}
