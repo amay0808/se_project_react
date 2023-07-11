@@ -2,6 +2,10 @@ import React from "react";
 import "./SideBar.css";
 
 function SideBar({ user }) {
+  if (!user) {
+    return null;
+  }
+
   const { username, avatar } = user;
 
   return (

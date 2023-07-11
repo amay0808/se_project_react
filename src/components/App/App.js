@@ -11,6 +11,7 @@ import Sidebar from "../SideBar/SideBar";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
 import ClothesSection from "../ClothesSection/ClothesSection";
+import Profile from "../Profile/Profile";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -89,11 +90,13 @@ function App() {
         console.error("Error occurred while deleting item:", error);
       });
   };
-
   return (
     <div className="app-container">
       <CurrentTemperatureUnitContext.Provider
-        value={{ CurrentTemperatureUnit, handleToggleSwitchChange }}
+        value={{
+          currentTemperatureUnit: CurrentTemperatureUnit,
+          handleToggleSwitchChange: handleToggleSwitchChange,
+        }}
       >
         <Header onCreateModal={handleCreateModal} location="Merced" />
         <Switch>
@@ -110,6 +113,11 @@ function App() {
                 user={{ username: "Adrian M", avatar: "../images/avatar.svg" }}
               />
               <div className="clothing-container">
+                <Profile
+                  clothingItems={clothingItems}
+                  onCreateModal={handleCreateModal}
+                  onSelectCard={handleSelectedCard}
+                />
                 <ClothesSection
                   clothingItems={clothingItems}
                   onCreateModal={handleCreateModal}
