@@ -34,7 +34,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
   }, [currentTemperatureUnit, temp]);
 
   console.log("Weather type:", weatherType);
-  console.log("Clothing items:", clothingItems); // Log the clothing items received as props
+  console.log("Clothing items:", clothingItems);
 
   const filteredCards = clothingItems.filter((item) => {
     return (

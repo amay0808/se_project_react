@@ -6,7 +6,7 @@ function SideBar({ user }) {
     return null;
   }
 
-  const { username, avatar } = user;
+  const { username } = user;
 
   return (
     <div className="profile-sidebar">
@@ -14,7 +14,7 @@ function SideBar({ user }) {
         <h2 className="profile-sidebar__user-title">{username}</h2>
         <img
           className="profile-sidebar__user-avatar"
-          src={avatar}
+          src={require("../images/avatar.svg").default}
           alt="User Avatar"
         />
       </div>

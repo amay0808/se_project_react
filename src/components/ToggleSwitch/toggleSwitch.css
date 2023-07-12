@@ -7,7 +7,6 @@
   border: 2px solid black;
   width: 50px;
   height: 30px;
-  /* outline: none; */
   appearance: none;
 }
 .switch__slider {

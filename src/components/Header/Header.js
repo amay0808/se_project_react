@@ -15,7 +15,7 @@ const Header = ({ onCreateModal, location }) => {
       <div className="header__logo">
         <div>
           <Link to="/">
-            <img src="../images/logo.svg" alt="logo" />
+            <img src={require("../images/logo.svg").default} alt="logo" />
           </Link>
         </div>
         <div>{currentDate}</div>
@@ -34,7 +34,7 @@ const Header = ({ onCreateModal, location }) => {
         </div>
         <Link to="/profile">Adrian</Link>
         <div>
-          <img src="../images/avatar.svg" alt="logo" />
+          <img src={require("../images/avatar.svg").default} alt="logo" />
         </div>
       </div>
     </header>

@@ -20,7 +20,7 @@
   padding: 34px 36px;
 }
 .modal__close-button {
-  background: url("../../images/close.svg");
+  background: url("../images/close.svg");
   position: absolute;
   border: none;
   top: 20px;

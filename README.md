@@ -1,8 +1,12 @@
-# WTWR (What to Wear?)
+# WTWR (What to Wear?) - [Live Project](https://amay0808.github.io/se_project_react/)
 
 ## About the project
 
 WTWR (What to Wear?) is a weather-based clothing recommendation application. The project's goal is to provide users with suitable clothing recommendations based on the daily weather forecast.
+
+## Project Live Link
+
+You can access the live project here: [https://amay0808.github.io/se_project_react/](https://amay0808.github.io/se_project_react/)
 
 ## Functionality
 

@@ -100,7 +100,12 @@ function App() {
                 <Profile
                   user={{
                     username: "Adrian M",
-                    avatar: "../images/avatar.svg",
+                    avatar: (
+                      <img
+                        src={require("../images/avatar.svg").default}
+                        alt="logo"
+                      />
+                    ),
                   }}
                   clothingItems={clothingItems}
                   onCreateModal={handleCreateModal}
