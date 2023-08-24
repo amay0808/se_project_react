@@ -1,41 +1,56 @@
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./header.css";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Import the context
 
 const Header = ({ onCreateModal, location }) => {
+  const { currentUser, isLoggedIn } = useContext(CurrentUserContext); // Get the current user and login status
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  console.log("Header");
+  const avatarPlaceholder =
+    currentUser && currentUser.username
+      ? currentUser.username[0].toUpperCase()
+      : "";
 
   return (
     <header className="header">
       <div className="header__logo">
-        <div>
-          <Link to="/">
-            <img src={require("../images/logo.svg").default} alt="logo" />
-          </Link>
-        </div>
+        <Link to="/">
+          <img src={require("../images/logo.svg").default} alt="logo" />
+        </Link>
         <div>{currentDate}</div>
         <div>{location}</div>
       </div>
       <div className="header__avatar-logo">
         <ToggleSwitch />
-        <div>
-          <button
-            type="text"
-            className="add__clothes-button"
-            onClick={onCreateModal}
-          >
-            + Add Clothes
-          </button>
-        </div>
-        <Link to="/profile">Adrian</Link>
-        <div>
-          <img src={require("../images/avatar.svg").default} alt="logo" />
-        </div>
+        {isLoggedIn ? (
+          <>
+            <button
+              type="text"
+              className="add__clothes-button"
+              onClick={onCreateModal}
+            >
+              + Add Clothes
+            </button>
+            <Link to="/profile">{currentUser.username || "User"}</Link>
+            <div>
+              {currentUser.avatar ? (
+                <img src={currentUser.avatar} alt="avatar" />
+              ) : (
+                <div className="avatar-placeholder">{avatarPlaceholder}</div>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
       </div>
     </header>
   );
