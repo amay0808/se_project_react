@@ -107,25 +107,17 @@ function App() {
         .then((data) => {
           if (data.valid) {
             // Assuming the API returns { valid: true } if the token is valid
-            setIsLoggedIn(true);
+            setIsLoggedIn(true); // Set isLoggedIn to true only if the token is valid
+          } else {
+            // If the token is invalid, remove it from local storage
+            localStorage.removeItem("jwt");
           }
         })
         .catch((error) => {
           console.error("Failed to validate token:", error);
-          localStorage.removeItem("jwt"); // Removing invalid token
+          localStorage.removeItem("jwt"); // Remove potentially invalid token
         });
     }
-  }, []);
-
-  useEffect(() => {
-    getForecastWeather()
-      .then((data) => {
-        const temperature = parseWeatherData(data);
-        setTemp(temperature);
-      })
-      .catch((error) =>
-        console.error("Error occurred while getting forecast weather:", error)
-      );
   }, []);
 
   useEffect(() => {
@@ -133,6 +125,17 @@ function App() {
       .then((items) => setClothingItems(items))
       .catch((error) =>
         console.error("Error occurred while getting items:", error)
+      );
+  }, []);
+  useEffect(() => {
+    getForecastWeather()
+      .then((data) => {
+        const temperature = parseWeatherData(data);
+        console.log("Setting temperature to:", temperature); // Debugging log
+        setTemp(temperature);
+      })
+      .catch((error) =>
+        console.error("Error occurred while getting forecast weather:", error)
       );
   }, []);
 
@@ -147,11 +150,11 @@ function App() {
       );
   };
 
-  const onDeleteItem = (id) => {
-    deleteItem(id)
+  const onDeleteItem = (_id) => {
+    deleteItem(_id)
       .then(() => {
         setClothingItems((prevItems) =>
-          prevItems.filter((item) => item.id !== id)
+          prevItems.filter((item) => item._id !== _id)
         );
         handleCloseModal();
       })
@@ -173,11 +176,21 @@ function App() {
         handleToggleSwitchChange,
       }}
     >
-      {/* CurrentUserContext.Provider added here */}
       <CurrentUserContext.Provider value={currentUserContextValue}>
         <div className="app-container">
           <Header onCreateModal={handleCreateModal} location="Merced" />
-          <Switch>{/* ... (existing Routes and JSX content) */}</Switch>
+          <Switch>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/">
+              <Main
+                weatherTemp={temp}
+                onSelectCard={handleSelectedCard}
+                clothingItems={clothingItems}
+              />
+            </Route>
+          </Switch>
           <Footer />
           {activeModal === "create" && (
             <AddItemModal

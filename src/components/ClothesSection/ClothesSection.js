@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ClothesSection.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Replace with the actual path to your context
 
 function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
+  // Get the current user from your context
+  const { currentUser } = useContext(CurrentUserContext);
+
   return (
     <div className="clothes">
       <div className="clothes__header">
@@ -11,17 +15,21 @@ function ClothesSection({ clothingItems, onCreateModal, onSelectCard }) {
         </button>
       </div>
       <div className="cardCont">
-        {clothingItems.map((item) => (
-          <div key={item.id} className="card">
-            <span className="card__text">{item.name}</span>
-            <img
-              className="card__image"
-              src={item.imageUrl}
-              alt={item.name}
-              onClick={() => onSelectCard(item)}
-            />
-          </div>
-        ))}
+        {clothingItems
+          .filter((item) => item.owner._id === currentUser._id) // Show only items owned by current user
+          .map((item) => (
+            <div key={item._id} className="card">
+              {" "}
+              {/* Make sure to use _id as key if that's what your item objects use */}
+              <span className="card__text">{item.name}</span>
+              <img
+                className="card__image"
+                src={item.imageUrl}
+                alt={item.name}
+                onClick={() => onSelectCard(item)}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

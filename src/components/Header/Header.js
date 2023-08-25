@@ -2,10 +2,10 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./header.css";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Import the context
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Header = ({ onCreateModal, location }) => {
-  const { currentUser, isLoggedIn } = useContext(CurrentUserContext); // Get the current user and login status
+  const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",

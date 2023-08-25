@@ -1,10 +1,20 @@
+import React, { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Adjust the import path according to your project structure
 import "./itemModal.css";
 
 const ItemModal = ({ selectedCard, onClose, onDelete }) => {
-  console.log(`itemModal`);
+  const { currentUser } = useContext(CurrentUserContext);
+
+  const isOwn =
+    selectedCard.owner && selectedCard.owner._id === currentUser._id;
+
+  const itemDeleteButtonClassName = `item__delete-button ${
+    isOwn ? "item__delete-button_visible" : "item__delete-button_hidden"
+  }`;
+
   const handleDelete = () => {
-    console.log(selectedCard);
-    onDelete(selectedCard.id);
+    console.log("Selected card details: ", selectedCard);
+    onDelete(selectedCard._id);
   };
 
   return (
@@ -25,7 +35,7 @@ const ItemModal = ({ selectedCard, onClose, onDelete }) => {
           Weather type: {selectedCard.weather}
         </div>
         <button
-          className="item__delete-button"
+          className={itemDeleteButtonClassName}
           type="button"
           onClick={handleDelete}
         >
