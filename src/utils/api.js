@@ -44,3 +44,48 @@ export function deleteItem(id) {
     }
   });
 }
+// Function to update profile
+export const updateProfile = async (userData) => {
+  const response = await fetch("http://localhost:3001/users/me", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`, // Add token here
+    },
+    body: JSON.stringify(userData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update profile");
+  }
+
+  return await response.json();
+};
+// PUT /items/:id/like
+export function addCardLike(id) {
+  return fetch(`${baseUrl}/items/${id}/like`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${getToken()}`, // Add token here
+    },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed to like item");
+    }
+    return response.json();
+  });
+}
+// DELETE /items/:id/like
+export function removeCardLike(id) {
+  return fetch(`${baseUrl}/items/${id}/like`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`, // Add token here
+    },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed to dislike item");
+    }
+    return response.json();
+  });
+}

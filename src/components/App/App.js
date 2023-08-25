@@ -7,10 +7,10 @@ import ItemModal from "../ItemModal/ItemModal";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import Sidebar from "../SideBar/SideBar";
+// import Sidebar from "../SideBar/SideBar";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
-import ClothesSection from "../ClothesSection/ClothesSection";
+// import ClothesSection from "../ClothesSection/ClothesSection";
 import Profile from "../Profile/Profile";
 import RegisterModal from "../RegisterModal/RegisterModal"; // import RegisterModal if not imported
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -176,6 +176,7 @@ function App() {
         handleToggleSwitchChange,
       }}
     >
+      {/* CurrentUserContext.Provider added here */}
       <CurrentUserContext.Provider value={currentUserContextValue}>
         <div className="app-container">
           <Header onCreateModal={handleCreateModal} location="Merced" />

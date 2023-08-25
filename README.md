@@ -34,3 +34,8 @@ The application makes an API call to retrieve the daily weather forecast. The we
 3. The application will retrieve the weather forecast for your location.
 4. Based on the weather forecast, the application will recommend suitable clothing items for the day.
 5. View the recommended clothing items and choose your outfit accordingly.
+
+## Project Repositories
+
+- **Front-end**: This repository
+- **Back-end**: [se_project_express](https://github.com/amay0808/se_project_express.git)
