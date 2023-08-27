@@ -10,6 +10,12 @@ const ModalWithForm = ({
   onSubmit,
 }) => {
   console.log("ModalWithForm");
+  console.log("ModalWithForm isOpen:", isOpen); // Debugging log
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div className={`modal modal_type_${name}`}>
       <div className="modal__content">
@@ -17,7 +23,7 @@ const ModalWithForm = ({
           type="button"
           onClick={onClose}
           className="modal__close-button"
-        />
+        ></button>
         <h3 className="modal__title">{title}</h3>
         <form onSubmit={onSubmit}>
           {children}

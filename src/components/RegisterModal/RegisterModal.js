@@ -1,62 +1,73 @@
 import React, { useState } from "react";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-// RegisterModal.js
-const RegisterModal = ({ handleCloseModal, isOpen, onRegister }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    avatar: "",
-  });
+function RegisterModal({ isOpen, onClose, onSignup }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [name, setName] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    onRegister(formData);
+    try {
+      onSignup({ email, password, name, avatar });
+      onClose();
+    } catch (error) {
+      console.error("Failed to register", error);
+    }
   };
 
   return (
-    isOpen && (
-      <div className="modal">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Email"
-            name="email"
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Avatar URL"
-            name="avatar"
-            onChange={handleChange}
-          />
-          <button type="submit">Register</button>
-          <button type="button" onClick={handleCloseModal}>
-            Cancel
-          </button>
-        </form>
-      </div>
-    )
+    <ModalWithForm
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleRegister}
+      title="Sign Up"
+      name="signup"
+      buttonText="Next"
+    >
+      <label className="form__label">
+        <strong>Email*</strong>
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="form__input"
+        />
+      </label>
+      <label className="form__label">
+        <strong>Password*</strong>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          className="form__input"
+        />
+      </label>
+      <label className="form__label">
+        <strong>Name</strong>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          className="form__input"
+        />
+      </label>
+      <label className="form__label">
+        <strong>Avatar URL</strong>
+        <input
+          type="text"
+          value={avatar}
+          onChange={(e) => setAvatar(e.target.value)}
+          placeholder="Avatar URL"
+          className="form__input"
+        />
+      </label>
+    </ModalWithForm>
   );
-};
+}
+
 export default RegisterModal;

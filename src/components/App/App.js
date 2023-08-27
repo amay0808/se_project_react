@@ -7,14 +7,11 @@ import ItemModal from "../ItemModal/ItemModal";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../AddItemModal/AddItemModal";
-// import Sidebar from "../SideBar/SideBar";
-import { getItems, postItem, deleteItem } from "../../utils/api";
-import "./app.css";
-// import ClothesSection from "../ClothesSection/ClothesSection";
 import Profile from "../Profile/Profile";
-import RegisterModal from "../RegisterModal/RegisterModal"; // import RegisterModal if not imported
+import LoginModal from "../LoginModal/LoginModal"; // Import the LoginModal component
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-
+import RegisterModal from "../RegisterModal/RegisterModal"; // Import the RegisterModal component
+import { getItems, postItem, deleteItem } from "../../utils/api";
 function App() {
   // State Hooks
   const [activeModal, setActiveModal] = useState("");
@@ -24,7 +21,6 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   // Function Declarations
   const handleCreateModal = () => setActiveModal("create");
   const handleCloseModal = () => setActiveModal("");
@@ -68,10 +64,9 @@ function App() {
     }
   };
 
-  // Mock function for user registration
   const handleRegister = async (userData) => {
     try {
-      const response = await fetch("http://localhost:3001/register", {
+      const response = await fetch("http://localhost:3001/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,18 +75,26 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        if (response.status === 409) {
+          alert("Username or Email already exists");
+        } else {
+          throw new Error("Network response was not ok");
+        }
       }
 
       const data = await response.json();
+
       // TODO: Perform login here with the registered data
-      handleCloseModal(); // Close the modal after successful registration
+
+      // setActiveModal(""); // Close the modal after successful registration
       return data;
     } catch (error) {
       console.error("Error occurred while creating user:", error);
+      // Handle error accordingly, perhaps setting some state to indicate the failure
       throw error;
     }
   };
+
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -176,10 +179,14 @@ function App() {
         handleToggleSwitchChange,
       }}
     >
-      {/* CurrentUserContext.Provider added here */}
       <CurrentUserContext.Provider value={currentUserContextValue}>
         <div className="app-container">
-          <Header onCreateModal={handleCreateModal} location="Merced" />
+          <Header
+            onCreateModal={handleCreateModal}
+            onSignupClick={() => setActiveModal("signup")}
+            onLoginClick={() => setActiveModal("login")}
+            location="Merced"
+          />
           <Switch>
             <Route path="/profile">
               <Profile />
@@ -193,6 +200,14 @@ function App() {
             </Route>
           </Switch>
           <Footer />
+          {/* Render the LoginModal component */}
+          <LoginModal
+            isOpen={activeModal === "login"}
+            onClose={() => setActiveModal("")}
+            onLogin={handleLogin}
+          />
+
+          {/* AddItemModal and ItemModal */}
           {activeModal === "create" && (
             <AddItemModal
               handleCloseModal={handleCloseModal}
@@ -207,13 +222,11 @@ function App() {
               onDelete={onDeleteItem}
             />
           )}
-          {activeModal === "register" && (
-            <RegisterModal
-              handleCloseModal={handleCloseModal}
-              isOpen={activeModal === "register"}
-              onRegister={handleRegister}
-            />
-          )}
+          <RegisterModal
+            onClose={handleCloseModal}
+            isOpen={activeModal === "signup"}
+            onSignup={handleRegister} // <-- Pass handleRegister to SignUpModal
+          />
         </div>
       </CurrentUserContext.Provider>
     </CurrentTemperatureUnitContext.Provider>

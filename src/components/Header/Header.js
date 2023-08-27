@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-const Header = ({ onCreateModal, location }) => {
+const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
@@ -47,8 +47,8 @@ const Header = ({ onCreateModal, location }) => {
           </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <button onClick={onSignupClick}>Sign Up</button>
+            <button onClick={onLoginClick}>Login</button>
           </>
         )}
       </div>

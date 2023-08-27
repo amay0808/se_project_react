@@ -95,3 +95,11 @@
   margin-top: 10px;
   margin-left: 8px;
 }
+.form__label {
+  font-family: "Cabinet Grotesk";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+}
