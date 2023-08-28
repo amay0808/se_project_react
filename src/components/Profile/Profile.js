@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import EditProfileModal from "../EditProfileModal/EditProfileModal"; // Import the EditProfileModal component
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import "./Profile.css";
 
 function Profile({ clothingItems, onCreateModal, onSelectCard }) {

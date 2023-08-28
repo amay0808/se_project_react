@@ -23,7 +23,9 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // Function Declarations
   const handleCreateModal = () => setActiveModal("create");
+  console.log("Opening create modal");
   const handleCloseModal = () => setActiveModal("");
+  console.log("Closing active modal"); // <-- Log here
   const handleSelectedCard = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
@@ -37,11 +39,12 @@ function App() {
     const token = localStorage.getItem("jwt");
     if (token) {
       setIsLoggedIn(true);
+      console.log("User already logged in"); // <-- Log here
     }
   }, []);
   const handleLogin = async (userData) => {
     try {
-      const response = await fetch("http://localhost:3001/signin", {
+      const response = await fetch("http://localhost:3001/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,13 +87,10 @@ function App() {
 
       const data = await response.json();
 
-      // TODO: Perform login here with the registered data
-
-      // setActiveModal(""); // Close the modal after successful registration
       return data;
     } catch (error) {
       console.error("Error occurred while creating user:", error);
-      // Handle error accordingly, perhaps setting some state to indicate the failure
+
       throw error;
     }
   };
@@ -108,9 +108,9 @@ function App() {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           if (data.valid) {
-            // Assuming the API returns { valid: true } if the token is valid
-            setIsLoggedIn(true); // Set isLoggedIn to true only if the token is valid
+            setIsLoggedIn(true);
           } else {
             // If the token is invalid, remove it from local storage
             localStorage.removeItem("jwt");
@@ -118,14 +118,17 @@ function App() {
         })
         .catch((error) => {
           console.error("Failed to validate token:", error);
-          localStorage.removeItem("jwt"); // Remove potentially invalid token
+          localStorage.removeItem("jwt");
         });
     }
   }, []);
 
   useEffect(() => {
     getItems()
-      .then((items) => setClothingItems(items))
+      .then((items) => {
+        setClothingItems(items);
+        console.log("Current clothing items: ", items);
+      })
       .catch((error) =>
         console.error("Error occurred while getting items:", error)
       );

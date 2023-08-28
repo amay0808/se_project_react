@@ -6,6 +6,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
+  const context = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -15,7 +16,7 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
     currentUser && currentUser.username
       ? currentUser.username[0].toUpperCase()
       : "";
-
+  console.log(context);
   return (
     <header className="header">
       <div className="header__logo">
@@ -36,7 +37,10 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             >
               + Add Clothes
             </button>
-            <Link to="/profile">{currentUser.username || "User"}</Link>
+            \
+            <Link to="/profile">
+              {(currentUser && currentUser.username) || "User"}
+            </Link>
             <div>
               {currentUser.avatar ? (
                 <img src={currentUser.avatar} alt="avatar" />
