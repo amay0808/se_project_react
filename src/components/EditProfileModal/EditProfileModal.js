@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Replace with your actual path
-import * as api from "../../utils/api"; // Your API functions
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import * as api from "../../utils/api";
 
 export default function EditProfileModal({ isOpen, onClose }) {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  const [name, setName] = useState(currentUser.name);
-  const [avatarUrl, setAvatarUrl] = useState(currentUser.avatarUrl);
+  const [name, setName] = useState(currentUser ? currentUser.name : "");
+  const [avatarUrl, setAvatarUrl] = useState(
+    currentUser ? currentUser.avatarUrl : ""
+  );
 
   const handleNameChange = (e) => setName(e.target.value);
   const handleAvatarUrlChange = (e) => setAvatarUrl(e.target.value);
@@ -13,7 +15,7 @@ export default function EditProfileModal({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedUser = await api.updateProfile({ name, avatarUrl }); // Implement this API call in your api.js
+      const updatedUser = await api.updateProfile({ name, avatarUrl });
       setCurrentUser(updatedUser);
       onClose();
     } catch (error) {

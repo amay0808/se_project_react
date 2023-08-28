@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import ModalWithForm from "../ModalWithForm/ModalWithForm"; // Update the path accordingly
+import { useHistory } from "react-router-dom";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function LoginModal({ isOpen, onClose, onLogin }) {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault(); // Prevent default form submission
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      onLogin({ email, password });
+      await onLogin({ email, password });
       onClose();
+      history.push("/profile");
     } catch (error) {
       console.error("Failed to login", error);
-      // Handle error accordingly
     }
   };
 
