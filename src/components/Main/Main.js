@@ -1,4 +1,3 @@
-// Main.js
 import { useContext, useMemo } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
@@ -6,11 +5,11 @@ import "./main.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherTemp, onSelectCard, clothingItems }) {
+  console.log("=== Main Component Mounted ==="); // Log when the component is mounted
+  console.log("Initial Clothing Items in Main:", clothingItems); // Log the initial items
+
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const temp = weatherTemp?.temperature?.[currentTemperatureUnit] || 999;
-
-  console.log("Temperature:", temp);
-  console.log("currenttemperatureunit:", currentTemperatureUnit);
 
   const weatherType = useMemo(() => {
     if (currentTemperatureUnit === "F") {

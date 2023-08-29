@@ -8,12 +8,12 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 import { Switch, Route } from "react-router-dom";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
-import LoginModal from "../LoginModal/LoginModal"; // Import the LoginModal component
+import LoginModal from "../LoginModal/LoginModal";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import RegisterModal from "../RegisterModal/RegisterModal"; // Import the RegisterModal component
+import RegisterModal from "../RegisterModal/RegisterModal";
 import { getItems, postItem, deleteItem } from "../../utils/api";
+
 function App() {
-  // State Hooks
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
@@ -21,27 +21,33 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // Function Declarations
-  const handleCreateModal = () => setActiveModal("create");
-  console.log("Opening create modal");
-  const handleCloseModal = () => setActiveModal("");
-  console.log("Closing active modal"); // <-- Log here
+
+  const handleCreateModal = () => {
+    setActiveModal("create");
+    console.log("Opening create modal");
+  };
+
+  const handleCloseModal = () => {
+    setActiveModal("");
+    console.log("Closing active modal");
+  };
+
   const handleSelectedCard = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
   };
+
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
 
-  useEffect(() => {
-    // Check if user is already logged in
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      setIsLoggedIn(true);
-      console.log("User already logged in"); // <-- Log here
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("jwt");
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //     console.log("User already logged in");
+  //   }
+  // }, []);
   const handleLogin = async (userData) => {
     try {
       const response = await fetch("http://localhost:3001/auth/signin", {
@@ -57,15 +63,56 @@ function App() {
       }
 
       const data = await response.json();
+      console.log("Received data:", data);
 
       if (data.token) {
+        console.log("Token exists:", data.token);
         localStorage.setItem("jwt", data.token);
         setIsLoggedIn(true);
+
+        const userDetail = await fetch("http://localhost:3001/users/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        });
+
+        const userDetailData = await userDetail.json();
+        console.log("User detail:", userDetailData);
+        setCurrentUser(userDetailData); // Assuming this contains the details you want
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("An error occurred:", error);
     }
   };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("jwt");
+  //   if (token) {
+  //     setIsLoggedIn(true); // Set this after validating the token successfully.
+  //     fetch("http://localhost:3001/user/me", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         if (data && data.valid) {
+  //           // <-- Check if data exists and is valid
+  //           setIsLoggedIn(true);
+  //           setCurrentUser(data.user);
+  //         } else {
+  //           localStorage.removeItem("jwt");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Failed to validate token:", error);
+  //         localStorage.removeItem("jwt");
+  //       });
+  //   }
+  // }, []);
 
   const handleRegister = async (userData) => {
     try {
@@ -95,30 +142,69 @@ function App() {
     }
   };
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem("jwt");
+  //   if (token) {
+  //     // API call to validate the token
+  //     fetch("http://localhost:3001/user/me", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         if (data.valid) {
+  //           setIsLoggedIn(true);
+  //         } else {
+  //           // If the token is invalid, remove it from local storage
+  //           localStorage.removeItem("jwt");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Failed to validate token:", error);
+  //         localStorage.removeItem("jwt");
+  //       });
+  //   }
+  // }, []);
   useEffect(() => {
+    // console.log("Initial currentUser:", currentUser);
+    // Attempt to get token from local storage
     const token = localStorage.getItem("jwt");
+
+    // If token exists, validate it and set user data
     if (token) {
-      // API call to validate the token
-      fetch("http://localhost:3001/user/me", {
+      fetch("http://localhost:3001/users/me", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to validate token");
+          }
+          return res.json();
+        })
         .then((data) => {
-          console.log(data);
-          if (data.valid) {
+          // Check if the data returned is valid (customize this based on your API's response)
+          console.log("Token validation data:", data);
+          if (data && data.valid) {
             setIsLoggedIn(true);
+            setCurrentUser(data.user);
           } else {
             // If the token is invalid, remove it from local storage
             localStorage.removeItem("jwt");
+            setIsLoggedIn(false);
           }
         })
         .catch((error) => {
           console.error("Failed to validate token:", error);
           localStorage.removeItem("jwt");
+          setIsLoggedIn(false);
         });
     }
   }, []);
@@ -189,6 +275,7 @@ function App() {
             onSignupClick={() => setActiveModal("signup")}
             onLoginClick={() => setActiveModal("login")}
             location="Merced"
+            currentUser={currentUser} // <-- pass currentUser down here
           />
           <Switch>
             <Route path="/profile">

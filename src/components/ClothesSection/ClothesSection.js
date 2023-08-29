@@ -1,8 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./ClothesSection.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function ClothesSection({ clothingItems = [], onCreateModal, onSelectCard }) {
+  console.log("=== ClothesSection Component Mounted ==="); // Log when the component is mounted
+  console.log("Initial Clothing Items in ClothesSection:", clothingItems); // Log the initial items
+
+  useEffect(() => {
+    console.log("Clothing Items updated in ClothesSection:", clothingItems); // Log when items get updated
+  }, [clothingItems]);
   const { currentUser } = useContext(CurrentUserContext);
 
   // Debugging logs

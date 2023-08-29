@@ -12,10 +12,10 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
     day: "numeric",
   });
 
-  const avatarPlaceholder =
-    currentUser && currentUser.username
-      ? currentUser.username[0].toUpperCase()
-      : "";
+  const avatarPlaceholder = currentUser?.username
+    ? currentUser.username[0].toUpperCase()
+    : "";
+
   console.log(context);
   return (
     <header className="header">
@@ -37,12 +37,9 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             >
               + Add Clothes
             </button>
-            \
-            <Link to="/profile">
-              {(currentUser && currentUser.username) || "User"}
-            </Link>
+            <Link to="/profile">{currentUser?.username ?? "User"}</Link>
             <div>
-              {currentUser.avatar ? (
+              {currentUser?.avatar ? (
                 <img src={currentUser.avatar} alt="avatar" />
               ) : (
                 <div className="avatar-placeholder">{avatarPlaceholder}</div>

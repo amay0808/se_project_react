@@ -13,7 +13,7 @@ const ItemModal = ({ selectedCard, onClose, onDelete }) => {
   }`;
 
   const handleDelete = () => {
-    console.log("Selected card details: ", selectedCard);
+    // console.log("Selected card details: ", selectedCard);
     onDelete(selectedCard._id);
   };
 
