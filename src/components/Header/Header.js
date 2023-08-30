@@ -37,7 +37,7 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             >
               + Add Clothes
             </button>
-            <Link to="/profile">{currentUser?.username ?? "User"}</Link>
+            <Link to="/">{currentUser?.username ?? "User"}</Link>
             <div>
               {currentUser?.avatar ? (
                 <img src={currentUser.avatar} alt="avatar" />
@@ -48,8 +48,12 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
           </>
         ) : (
           <>
-            <button onClick={onSignupClick}>Sign Up</button>
-            <button onClick={onLoginClick}>Login</button>
+            <button className="auth-button" onClick={onSignupClick}>
+              Sign Up
+            </button>
+            <button className="auth-button" onClick={onLoginClick}>
+              Login
+            </button>
           </>
         )}
       </div>

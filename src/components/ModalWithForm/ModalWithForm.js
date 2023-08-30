@@ -9,10 +9,11 @@ const ModalWithForm = ({
   isOpen,
   onSubmit,
 }) => {
-  console.log("ModalWithForm");
-  console.log("ModalWithForm isOpen:", isOpen); // Debugging log
+  // console.log("ModalWithForm"); // Debugging log
+  // console.log("ModalWithForm isOpen:", isOpen); // Debugging log
 
   if (!isOpen) {
+    console.log("Modal is not open"); // Log if modal is not open
     return null;
   }
 
@@ -21,11 +22,19 @@ const ModalWithForm = ({
       <div className="modal__content">
         <button
           type="button"
-          onClick={onClose}
+          onClick={() => {
+            console.log("Close button clicked"); // Log close button clicked
+            onClose();
+          }}
           className="modal__close-button"
         ></button>
         <h3 className="modal__title">{title}</h3>
-        <form onSubmit={onSubmit}>
+        <form
+          onSubmit={(e) => {
+            console.log("Form submitted"); // Log form submission
+            onSubmit(e);
+          }}
+        >
           {children}
           <button className="add__garment-button" type="submit">
             {buttonText}

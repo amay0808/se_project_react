@@ -17,9 +17,10 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
     // console.log(e.target.value);
     setWeatherType(e.target.value);
   };
+  // AddItemModal
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("Form submit:", { name, imageUrl: link, weather: weatherType }); // Log the submitted form data
+    console.log({ name, imageUrl: link, weather: weatherType });
     onAddItem({ name, imageUrl: link, weather: weatherType });
   };
 

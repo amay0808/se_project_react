@@ -9,6 +9,7 @@ function ClothesSection({ clothingItems = [], onCreateModal, onSelectCard }) {
   useEffect(() => {
     console.log("Clothing Items updated in ClothesSection:", clothingItems); // Log when items get updated
   }, [clothingItems]);
+
   const { currentUser } = useContext(CurrentUserContext);
 
   // Debugging logs
@@ -16,31 +17,46 @@ function ClothesSection({ clothingItems = [], onCreateModal, onSelectCard }) {
   console.log("Clothing items:", clothingItems);
 
   if (!clothingItems || !currentUser) {
+    console.log("Loading state active"); // Log when in loading state
     return <div>Loading...</div>;
   }
-
   return (
     <div className="clothes">
       <div className="clothes__header">
         <h2 className="clothes__title">Your Items</h2>
-        <button className="clothes__btn" onClick={onCreateModal}>
+        <button
+          className="clothes__btn"
+          onClick={() => {
+            console.log("Add New button clicked in ClothesSection"); // Updated log when the add button is clicked
+            onCreateModal();
+          }}
+        >
           + Add New
         </button>
       </div>
       <div className="cardCont">
         {clothingItems
-          .filter((item) => item.owner._id === currentUser._id)
-          .map((item) => (
-            <div key={item._id} className="card">
-              <span className="card__text">{item.name}</span>
-              <img
-                className="card__image"
-                src={item.imageUrl}
-                alt={item.name}
-                onClick={() => onSelectCard(item)}
-              />
-            </div>
-          ))}
+          .filter((item) => {
+            console.log(`Checking owner ID for item: `, item); // Log item being filtered
+            return item.owner._id === currentUser._id;
+          })
+          .map((item, index) => {
+            console.log(`Rendering item ${index} in ClothesSection: `, item); // Updated log for each item being rendered
+            return (
+              <div key={item._id} className="card">
+                <span className="card__text">{item.name}</span>
+                <img
+                  className="card__image"
+                  src={item.imageUrl}
+                  alt={item.name}
+                  onClick={() => {
+                    console.log(`Item clicked in ClothesSection: `, item); // Updated log for the clicked item
+                    onSelectCard(item);
+                  }}
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );

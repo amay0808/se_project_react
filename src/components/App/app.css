@@ -2,6 +2,7 @@
   position: relative;
 }
 .weather_info {
+  background-color: rgba(0, 0, 0, 0.5); /* added for debugging */
   position: absolute;
   top: 12px;
   left: 16px;

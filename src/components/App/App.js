@@ -23,6 +23,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleCreateModal = () => {
+    console.log("handleCreateModal() called in App.js"); // Added log
     setActiveModal("create");
     console.log("Opening create modal");
   };
@@ -41,15 +42,9 @@ function App() {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("jwt");
-  //   if (token) {
-  //     setIsLoggedIn(true);
-  //     console.log("User already logged in");
-  //   }
-  // }, []);
   const handleLogin = async (userData) => {
     try {
+      // Existing login logic
       const response = await fetch("http://localhost:3001/auth/signin", {
         method: "POST",
         headers: {
@@ -63,10 +58,7 @@ function App() {
       }
 
       const data = await response.json();
-      console.log("Received data:", data);
-
       if (data.token) {
-        console.log("Token exists:", data.token);
         localStorage.setItem("jwt", data.token);
         setIsLoggedIn(true);
 
@@ -78,41 +70,28 @@ function App() {
         });
 
         const userDetailData = await userDetail.json();
-        console.log("User detail:", userDetailData);
-        setCurrentUser(userDetailData); // Assuming this contains the details you want
+        setCurrentUser(userDetailData);
+
+        // Fetch items for the user after successful login
+        const itemsResponse = await fetch("http://localhost:3001/items", {
+          // Update the URL as needed
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        });
+
+        if (!itemsResponse.ok) {
+          throw new Error("Failed to fetch items");
+        }
+
+        const itemsData = await itemsResponse.json();
+        setClothingItems(itemsData);
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("jwt");
-  //   if (token) {
-  //     setIsLoggedIn(true); // Set this after validating the token successfully.
-  //     fetch("http://localhost:3001/user/me", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         if (data && data.valid) {
-  //           // <-- Check if data exists and is valid
-  //           setIsLoggedIn(true);
-  //           setCurrentUser(data.user);
-  //         } else {
-  //           localStorage.removeItem("jwt");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Failed to validate token:", error);
-  //         localStorage.removeItem("jwt");
-  //       });
-  //   }
-  // }, []);
 
   const handleRegister = async (userData) => {
     try {
@@ -142,33 +121,6 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("jwt");
-  //   if (token) {
-  //     // API call to validate the token
-  //     fetch("http://localhost:3001/user/me", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //         if (data.valid) {
-  //           setIsLoggedIn(true);
-  //         } else {
-  //           // If the token is invalid, remove it from local storage
-  //           localStorage.removeItem("jwt");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Failed to validate token:", error);
-  //         localStorage.removeItem("jwt");
-  //       });
-  //   }
-  // }, []);
   useEffect(() => {
     // console.log("Initial currentUser:", currentUser);
     // Attempt to get token from local storage
@@ -218,7 +170,7 @@ function App() {
       .catch((error) =>
         console.error("Error occurred while getting items:", error)
       );
-  }, []);
+  }, [isLoggedIn]);
   useEffect(() => {
     getForecastWeather()
       .then((data) => {
@@ -231,9 +183,12 @@ function App() {
       );
   }, []);
 
+  // App.js
   const onAddItem = (values) => {
+    console.log("onAddItem called with:", values);
     postItem(values)
       .then((newItem) => {
+        console.log("Added item:", newItem);
         setClothingItems((prevItems) => [newItem, ...prevItems]);
         handleCloseModal();
       })
@@ -278,7 +233,7 @@ function App() {
             currentUser={currentUser} // <-- pass currentUser down here
           />
           <Switch>
-            <Route path="/profile">
+            <Route path="/Profile">
               <Profile />
             </Route>
             <Route path="/">
