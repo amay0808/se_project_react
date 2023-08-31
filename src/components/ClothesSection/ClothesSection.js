@@ -1,25 +1,27 @@
 import React, { useContext, useEffect } from "react";
+import PropTypes from "prop-types";
 import "./ClothesSection.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function ClothesSection({ clothingItems = [], onCreateModal, onSelectCard }) {
-  console.log("=== ClothesSection Component Mounted ==="); // Log when the component is mounted
-  console.log("Initial Clothing Items in ClothesSection:", clothingItems); // Log the initial items
+function ClothesSection({ clothingItems = [], onAddNewItem, onSelectCard }) {
+  // Renamed onCreateModal to onAddNewItem
+  console.log("=== ClothesSection Component Mounted ===");
+  console.log("Initial Clothing Items in ClothesSection:", clothingItems);
 
   useEffect(() => {
-    console.log("Clothing Items updated in ClothesSection:", clothingItems); // Log when items get updated
+    console.log("Clothing Items updated in ClothesSection:", clothingItems);
   }, [clothingItems]);
 
   const { currentUser } = useContext(CurrentUserContext);
 
-  // Debugging logs
   console.log("Current user:", currentUser);
   console.log("Clothing items:", clothingItems);
 
   if (!clothingItems || !currentUser) {
-    console.log("Loading state active"); // Log when in loading state
+    console.log("Loading state active");
     return <div>Loading...</div>;
   }
+
   return (
     <div className="clothes">
       <div className="clothes__header">
@@ -27,8 +29,11 @@ function ClothesSection({ clothingItems = [], onCreateModal, onSelectCard }) {
         <button
           className="clothes__btn"
           onClick={() => {
-            console.log("Add New button clicked in ClothesSection"); // Updated log when the add button is clicked
-            onCreateModal();
+            console.log("Add New button clicked in ClothesSection");
+            if (typeof onAddNewItem === "function") {
+              // Check if onAddNewItem is a function
+              onAddNewItem(); // Invoke it
+            }
           }}
         >
           + Add New
@@ -37,29 +42,35 @@ function ClothesSection({ clothingItems = [], onCreateModal, onSelectCard }) {
       <div className="cardCont">
         {clothingItems
           .filter((item) => {
-            console.log(`Checking owner ID for item: `, item); // Log item being filtered
-            return item.owner._id === currentUser._id;
+            console.log("Item:", item, "Item Owner:", item?.owner); // Debugging line
+            return item?.owner?._id === currentUser?._id;
           })
-          .map((item, index) => {
-            console.log(`Rendering item ${index} in ClothesSection: `, item); // Updated log for each item being rendered
-            return (
-              <div key={item._id} className="card">
-                <span className="card__text">{item.name}</span>
-                <img
-                  className="card__image"
-                  src={item.imageUrl}
-                  alt={item.name}
-                  onClick={() => {
-                    console.log(`Item clicked in ClothesSection: `, item); // Updated log for the clicked item
-                    onSelectCard(item);
-                  }}
-                />
-              </div>
-            );
-          })}
+          .map((item, index) => (
+            <div key={item._id} className="card">
+              <span className="card__text">{item.name}</span>
+              <img
+                className="card__image"
+                src={item.imageUrl}
+                alt={item.name}
+                onClick={() => onSelectCard(item)}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );
 }
+
+// Add PropTypes
+ClothesSection.propTypes = {
+  clothingItems: PropTypes.array,
+  onAddNewItem: PropTypes.func, // Renamed onCreateModal to onAddNewItem
+  onSelectCard: PropTypes.func,
+};
+
+// Add Default Props
+ClothesSection.defaultProps = {
+  onAddNewItem: () => console.log("No onAddNewItem function provided"), // Renamed onCreateModal to onAddNewItem
+};
 
 export default ClothesSection;

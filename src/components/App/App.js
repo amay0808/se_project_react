@@ -70,6 +70,7 @@ function App() {
         });
 
         const userDetailData = await userDetail.json();
+        console.log("Setting current user:", userDetailData);
         setCurrentUser(userDetailData);
 
         // Fetch items for the user after successful login
@@ -125,7 +126,7 @@ function App() {
     // console.log("Initial currentUser:", currentUser);
     // Attempt to get token from local storage
     const token = localStorage.getItem("jwt");
-
+    console.log("Retrieved token:", token);
     // If token exists, validate it and set user data
     if (token) {
       fetch("http://localhost:3001/users/me", {
@@ -218,10 +219,7 @@ function App() {
 
   return (
     <CurrentTemperatureUnitContext.Provider
-      value={{
-        currentTemperatureUnit,
-        handleToggleSwitchChange,
-      }}
+      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
       <CurrentUserContext.Provider value={currentUserContextValue}>
         <div className="app-container">
@@ -241,18 +239,16 @@ function App() {
                 weatherTemp={temp}
                 onSelectCard={handleSelectedCard}
                 clothingItems={clothingItems}
+                onAddNewItem={onAddItem} // <-- Pass the function down as a prop here
               />
             </Route>
           </Switch>
           <Footer />
-          {/* Render the LoginModal component */}
           <LoginModal
             isOpen={activeModal === "login"}
             onClose={() => setActiveModal("")}
             onLogin={handleLogin}
           />
-
-          {/* AddItemModal and ItemModal */}
           {activeModal === "create" && (
             <AddItemModal
               handleCloseModal={handleCloseModal}

@@ -1,6 +1,9 @@
 import React, { useState, useContext } from "react";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import * as api from "../../utils/api";
+
+// Removed the empty 'import'
 
 export default function EditProfileModal({ isOpen, onClose }) {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -24,28 +27,31 @@ export default function EditProfileModal({ isOpen, onClose }) {
   };
 
   return (
-    isOpen && (
-      <div className="modal">
-        <form onSubmit={handleSubmit}>
-          <h2>Edit Profile</h2>
-          <div className="input-group">
-            <label>Name</label>
-            <input type="text" value={name} onChange={handleNameChange} />
-          </div>
-          <div className="input-group">
-            <label>Avatar URL</label>
-            <input
-              type="text"
-              value={avatarUrl}
-              onChange={handleAvatarUrlChange}
-            />
-          </div>
-          <button type="submit">Update</button>
-          <button type="button" onClick={onClose}>
-            Cancel
-          </button>
-        </form>
+    <ModalWithForm
+      title="Change profile data"
+      buttonText="Save Changes"
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+    >
+      <div className="input__group">
+        <label className="input__label">Name*</label>
+        <input
+          className="form__input"
+          type="text"
+          value={name}
+          onChange={handleNameChange}
+        />
       </div>
-    )
+      <div className="input__group">
+        <label className="input__label">Avatar</label>
+        <input
+          className="form__input"
+          type="text"
+          value={avatarUrl}
+          onChange={handleAvatarUrlChange}
+        />
+      </div>
+    </ModalWithForm>
   );
 }

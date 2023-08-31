@@ -43,3 +43,10 @@
   border: none;
   cursor: pointer;
 }
+.profile-sidebar__user-avatar,
+.avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  object-fit: cover; /* This will ensure that the image covers the entire container without stretching */
+  border-radius: 50%; /* Optional: Makes the image round */
+}

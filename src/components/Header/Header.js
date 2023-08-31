@@ -6,17 +6,13 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
-  const context = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  const avatarPlaceholder = currentUser?.username
-    ? currentUser.username[0].toUpperCase()
-    : "";
+  const avatar = require("../images/avatar.svg").default;
 
-  console.log(context);
   return (
     <header className="header">
       <div className="header__logo">
@@ -40,9 +36,13 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             <Link to="/">{currentUser?.username ?? "User"}</Link>
             <div>
               {currentUser?.avatar ? (
-                <img src={currentUser.avatar} alt="avatar" />
+                <Link to="/se_project_react#/profile">
+                  <img src={currentUser.avatar} alt="avatar" />
+                </Link>
               ) : (
-                <div className="avatar-placeholder">{avatarPlaceholder}</div>
+                <Link to="/se_project_react#/profile">
+                  <img src={avatar} alt="User Avatar" />
+                </Link>
               )}
             </div>
           </>

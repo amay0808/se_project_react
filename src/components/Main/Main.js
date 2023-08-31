@@ -1,10 +1,11 @@
 import { useContext, useMemo } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
+import ClothesSection from "../ClothesSection/ClothesSection"; // Import the ClothesSection component here
 import "./main.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherTemp, onSelectCard, clothingItems }) {
+function Main({ weatherTemp, onSelectCard, clothingItems, onAddNewItem }) {
   console.log("=== Main Component Mounted ==="); // Log when the component is mounted
   console.log("Initial Clothing Items in Main:", clothingItems); // Log the initial items
 
@@ -48,6 +49,11 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
   return (
     <main className="main">
       <WeatherCard day={false} type="night" weatherTemp={temp} />
+      <ClothesSection
+        clothingItems={filteredCards}
+        onSelectCard={onSelectCard}
+        onAddNewItem={onAddNewItem} // <-- Pass the function down as a prop here
+      />
       <section className="card_section" id="card-section">
         Today is {temp} {currentTemperatureUnit} / You may want to wear:
         <div className="card_items">
