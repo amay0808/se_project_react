@@ -4,7 +4,7 @@ import ClothesSection from "../ClothesSection/ClothesSection";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import "./Profile.css";
 
-function Profile({ clothingItems, onCreateModal, onSelectCard }) {
+function Profile({ clothingItems, onCreateModal, onSelectCard, currentUser }) {
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
 
   const openEditProfileModal = () => {
@@ -17,10 +17,7 @@ function Profile({ clothingItems, onCreateModal, onSelectCard }) {
 
   return (
     <div className="profile-container">
-      <SideBar />
-      <button className="edit-profile-button" onClick={openEditProfileModal}>
-        Change profile data
-      </button>
+      <SideBar user={currentUser} openEditProfileModal={openEditProfileModal} />
       <EditProfileModal
         isOpen={isEditProfileModalOpen}
         onClose={closeEditProfileModal}

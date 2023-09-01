@@ -233,6 +233,7 @@ function App() {
           <Switch>
             <Route path="/profile">
               <Profile
+                currentUser={currentUser}
                 onSelectCard={handleSelectedCard}
                 clothingItems={clothingItems}
                 onAddNewItem={onAddItem}
