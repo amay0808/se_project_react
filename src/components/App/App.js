@@ -228,18 +228,22 @@ function App() {
             onSignupClick={() => setActiveModal("signup")}
             onLoginClick={() => setActiveModal("login")}
             location="Merced"
-            currentUser={currentUser} // <-- pass currentUser down here
+            currentUser={currentUser}
           />
           <Switch>
-            <Route path="/Profile">
-              <Profile />
+            <Route path="/profile">
+              <Profile
+                onSelectCard={handleSelectedCard}
+                clothingItems={clothingItems}
+                onAddNewItem={onAddItem}
+              />
             </Route>
             <Route path="/">
               <Main
                 weatherTemp={temp}
                 onSelectCard={handleSelectedCard}
                 clothingItems={clothingItems}
-                onAddNewItem={onAddItem} // <-- Pass the function down as a prop here
+                onAddNewItem={onAddItem}
               />
             </Route>
           </Switch>
@@ -266,7 +270,7 @@ function App() {
           <RegisterModal
             onClose={handleCloseModal}
             isOpen={activeModal === "signup"}
-            onSignup={handleRegister} // <-- Pass handleRegister to SignUpModal
+            onSignup={handleRegister}
           />
         </div>
       </CurrentUserContext.Provider>

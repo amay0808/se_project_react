@@ -19,7 +19,7 @@ function Profile({ clothingItems, onCreateModal, onSelectCard }) {
     <div className="profile-container">
       <SideBar />
       <button className="edit-profile-button" onClick={openEditProfileModal}>
-        Edit Profile
+        Change profile data
       </button>
       <EditProfileModal
         isOpen={isEditProfileModalOpen}

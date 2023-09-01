@@ -33,16 +33,13 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             >
               + Add Clothes
             </button>
-            <Link to="/">{currentUser?.username ?? "User"}</Link>
+            <Link to="/">{currentUser?.username ?? "User"}</Link>{" "}
+            {/* Here, the current user's username will be displayed if logged in */}
             <div>
               {currentUser?.avatar ? (
-                <Link to="/se_project_react#/profile">
-                  <img src={currentUser.avatar} alt="avatar" />
-                </Link>
+                <img src={currentUser.avatar} alt="avatar" />
               ) : (
-                <Link to="/se_project_react#/profile">
-                  <img src={avatar} alt="User Avatar" />
-                </Link>
+                <img src={avatar} alt="User Avatar" />
               )}
             </div>
           </>
