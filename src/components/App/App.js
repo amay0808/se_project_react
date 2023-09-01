@@ -41,6 +41,12 @@ function App() {
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
+  const currentUserContextValue = {
+    currentUser,
+    setCurrentUser,
+    isLoggedIn,
+    setIsLoggedIn,
+  };
 
   const handleLogin = async (userData) => {
     try {
@@ -210,11 +216,11 @@ function App() {
         console.error("Error occurred while deleting item:", error)
       );
   };
-  const currentUserContextValue = {
-    currentUser,
-    setCurrentUser,
-    isLoggedIn,
-    setIsLoggedIn,
+
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
   };
 
   return (
@@ -237,6 +243,7 @@ function App() {
                 onSelectCard={handleSelectedCard}
                 clothingItems={clothingItems}
                 onAddNewItem={onAddItem}
+                onSignOut={handleSignOut}
               />
             </Route>
             <Route path="/">

@@ -46,4 +46,23 @@
   border: none;
   background-color: transparent;
   color: inherit;
+  margin-top: 24px;
+}
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sign-out-button {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  margin-top: 8px;
 }
