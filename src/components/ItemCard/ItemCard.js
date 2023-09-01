@@ -5,18 +5,18 @@ import "./itemCard.css";
 function ItemCard({ onSelectCard, item, currentUser }) {
   const initialIsLiked =
     item && item.likes && currentUser
-      ? item.likes.some((id) => id === currentUser._id)
+      ? item.likes.some((_id) => _id === currentUser._id)
       : false;
 
-  const [isLiked, setIsLiked] = useState(initialIsLiked); // Declare useState at the top-level, unconditionally
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
 
   useEffect(() => {
-    if (item && item.likes && currentUser) {
-      setIsLiked(item.likes.some((id) => id === currentUser._id));
-    } else {
-      setIsLiked(false);
-    }
-  }, [item, item?.likes, currentUser?._id, currentUser]); // Add item to dependency list
+    setIsLiked(
+      item && item.likes && currentUser
+        ? item.likes.some((_id) => _id === currentUser._id)
+        : false
+    );
+  }, [item, currentUser]);
 
   const handleLikeClick = async () => {
     if (!currentUser || !item || !item._id) return;
@@ -40,7 +40,7 @@ function ItemCard({ onSelectCard, item, currentUser }) {
   const itemLikeButtonClassName = isLiked
     ? "like-button active"
     : "like-button";
-  console.log("Current User:", currentUser);
+
   return (
     <div className="card-container">
       <div className="card">
@@ -51,7 +51,7 @@ function ItemCard({ onSelectCard, item, currentUser }) {
           </button>
         )}
         <img
-          src={item.imageUrl || item.link}
+          src={item.imageUrl}
           className="card__image"
           alt={item.name}
           onClick={() => onSelectCard(item)}
@@ -60,5 +60,4 @@ function ItemCard({ onSelectCard, item, currentUser }) {
     </div>
   );
 }
-
 export default ItemCard;
