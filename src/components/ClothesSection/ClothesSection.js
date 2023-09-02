@@ -43,7 +43,7 @@ function ClothesSection({ clothingItems = [], onAddNewItem, onSelectCard }) {
         {clothingItems
           .filter((item) => {
             console.log("Item:", item, "Item Owner:", item?.owner); // Debugging line
-            return item?.owner?._id === currentUser?._id;
+            return item?.owner === currentUser?._id;
           })
           .map((item, index) => (
             <div key={item._id} className="card">

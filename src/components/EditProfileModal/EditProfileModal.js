@@ -3,8 +3,6 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import * as api from "../../utils/api";
 
-// Removed the empty 'import'
-
 export default function EditProfileModal({ isOpen, onClose }) {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser ? currentUser.name : "");
