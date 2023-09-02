@@ -18,7 +18,6 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
   console.log("Clothing items:", clothingItems);
 
   if (!clothingItems || !currentUser) {
-    console.log("Loading state active");
     return <div>Loading...</div>;
   }
 
@@ -29,10 +28,8 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
         <button
           className="clothes__btn"
           onClick={() => {
-            console.log("Add New button clicked in ClothesSection");
             if (typeof onAddNewItem === "function") {
-              // Check if onAddNewItem is a function
-              onAddNewItem(); // Invoke it
+              onAddNewItem();
             }
           }}
         >
@@ -41,10 +38,7 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
       </div>
       <div className="cardCont">
         {clothingItems
-          .filter((item) => {
-            console.log("Item:", item, "Item Owner:", item?.owner); // Debugging line
-            return item?.owner === currentUser?._id;
-          })
+          .filter((item) => item?.owner === currentUser?._id)
           .map((item, index) => (
             <div key={item._id} className="card">
               <span className="card__text">{item.name}</span>
@@ -52,7 +46,11 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
                 className="card__image"
                 src={item.imageUrl}
                 alt={item.name}
-                onClick={() => onSelectCard(item)}
+                onClick={() => {
+                  if (typeof onSelectCard === "function") {
+                    onSelectCard(item);
+                  }
+                }}
               />
             </div>
           ))}
@@ -61,16 +59,21 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
   );
 }
 
-// Add PropTypes
 ClothesSection.propTypes = {
-  clothingItems: PropTypes.array,
-  onAddNewItem: PropTypes.func, // Renamed onCreateModal to onAddNewItem
+  clothingItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      imageUrl: PropTypes.string,
+      owner: PropTypes.string,
+    })
+  ),
+  onAddNewItem: PropTypes.func,
   onSelectCard: PropTypes.func,
 };
 
-// Add Default Props
 ClothesSection.defaultProps = {
-  onAddNewItem: () => console.log("No onAddNewItem function provided"), // Renamed onCreateModal to onAddNewItem
+  onAddNewItem: () => console.warn("No onAddNewItem function provided"),
 };
 
 export default ClothesSection;

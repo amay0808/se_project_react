@@ -239,11 +239,12 @@ function App() {
           />
           <Switch>
             <Route path="/profile">
+              {console.log("Profile Route Accessed")}
               <Profile
                 currentUser={currentUser}
                 onSelectCard={handleSelectedCard}
                 clothingItems={clothingItems}
-                onAddNewItem={onAddItem}
+                onAddItem={onAddItem}
                 onSignOut={handleSignOut}
               />
             </Route>

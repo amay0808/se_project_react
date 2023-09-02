@@ -31,6 +31,7 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
       isOpen={isOpen}
       onSubmit={handleSubmit}
     >
+      {console.log("Is modal open?", isOpen)}
       <fieldset className="input__group">
         <label htmlFor="name" className="input__label">
           Name

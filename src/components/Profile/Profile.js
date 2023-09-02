@@ -3,15 +3,17 @@ import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import "./Profile.css";
+import AddItemModal from "../AddItemModal/AddItemModal";
 
 function Profile({
   clothingItems,
-  onCreateModal,
+  onAddItem,
   onSelectCard,
   currentUser,
   onSignOut,
 }) {
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+  const [isAddNewItemModalOpen, setIsAddNewItemModalOpen] = useState(false); // New state for add new item modal
 
   const openEditProfileModal = () => {
     setIsEditProfileModalOpen(true);
@@ -19,6 +21,14 @@ function Profile({
 
   const closeEditProfileModal = () => {
     setIsEditProfileModalOpen(false);
+  };
+
+  const openAddNewItemModal = () => {
+    setIsAddNewItemModalOpen(true); // New function to open the modal
+  };
+
+  const closeAddNewItemModal = () => {
+    setIsAddNewItemModalOpen(false); // New function to close the modal
   };
 
   return (
@@ -32,9 +42,14 @@ function Profile({
         isOpen={isEditProfileModalOpen}
         onClose={closeEditProfileModal}
       />
+      <AddItemModal
+        isOpen={isAddNewItemModalOpen}
+        handleCloseModal={closeAddNewItemModal}
+        onAddItem={onAddItem}
+      />
       <ClothesSection
         clothingItems={clothingItems}
-        onCreateModal={onCreateModal}
+        onAddNewItem={openAddNewItemModal}
         onSelectCard={onSelectCard}
       />
     </div>

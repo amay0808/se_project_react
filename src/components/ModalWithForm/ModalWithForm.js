@@ -9,6 +9,8 @@ const ModalWithForm = ({
   isOpen,
   onSubmit,
 }) => {
+  console.log("ModalWithForm onClose type:", typeof onClose);
+
   // console.log("ModalWithForm"); // Debugging log
   // console.log("ModalWithForm isOpen:", isOpen); // Debugging log
 
