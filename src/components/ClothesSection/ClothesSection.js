@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "./ClothesSection.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function ClothesSection({ clothingItems = [], onAddNewItem, onSelectCard }) {
+function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
   // Renamed onCreateModal to onAddNewItem
   console.log("=== ClothesSection Component Mounted ===");
   console.log("Initial Clothing Items in ClothesSection:", clothingItems);

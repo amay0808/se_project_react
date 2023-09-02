@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
-import ClothesSection from "../ClothesSection/ClothesSection"; // Import the ClothesSection component here
+import ClothesSection from "../ClothesSection/ClothesSection";
 import "./main.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 

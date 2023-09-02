@@ -10,7 +10,6 @@ const WeatherCard = ({ day, type, weatherTemp = "" }) => {
   const imageSrc = weatherOptions.find((i) => i.day === day && i.type === type);
   const imageSrcUrl = imageSrc?.url || "";
 
-  // Helper function to display the correct temperature unit
   const displayTemperatureUnit = () => {
     if (currentTemperatureUnit === "F") {
       return "F";
