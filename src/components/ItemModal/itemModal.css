@@ -12,12 +12,13 @@
 .item__modal-content {
   background-color: white;
   position: relative;
-  width: 496px;
+  width: 498px; /* Updated width */
+  height: 610px; /* Added height */
   max-width: 100%;
   border-radius: 20px;
   padding: 24px;
   overflow-y: auto;
-  max-height: calc(100% - 48px);
+  /* max-height: calc(100% - 48px); Remove or comment this out */
   padding-bottom: 112px;
 }
 .item__delete-button {
@@ -47,4 +48,9 @@
   margin-top: 20px;
   font-weight: 700;
   line-height: 24px;
+}
+.modal-image {
+  width: 498px;
+  height: 498px;
+  object-fit: cover;
 }
