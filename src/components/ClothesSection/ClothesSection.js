@@ -2,9 +2,12 @@ import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./ClothesSection.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useLocation } from "react-router-dom"; // Import useLocation
 
 function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
-  // Renamed onCreateModal to onAddNewItem
+  const location = useLocation(); // Use the hook
+
+  // Debug logs
   console.log("=== ClothesSection Component Mounted ===");
   console.log("Initial Clothing Items in ClothesSection:", clothingItems);
 
@@ -24,17 +27,21 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
   return (
     <div className="clothes">
       <div className="clothes__header">
-        <h2 className="clothes__title">Your Items</h2>
-        <button
-          className="clothes__btn"
-          onClick={() => {
-            if (typeof onAddNewItem === "function") {
-              onAddNewItem();
-            }
-          }}
-        >
-          + Add New
-        </button>
+        {location.pathname === "/profile" && (
+          <>
+            <h2 className="clothes__title">Your Items</h2>
+            <button
+              className="clothes__btn"
+              onClick={() => {
+                if (typeof onAddNewItem === "function") {
+                  onAddNewItem();
+                }
+              }}
+            >
+              + Add New
+            </button>
+          </>
+        )}
       </div>
       <div className="cardCont">
         {clothingItems
