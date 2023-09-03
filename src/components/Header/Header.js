@@ -19,7 +19,7 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
         <Link to="/">
           <img src={require("../images/logo.svg").default} alt="logo" />
         </Link>
-        <div>{currentDate}</div>
+        <div>{`${currentDate},`}</div>
         <div>{location}</div>
       </div>
       <div className="header__avatar-logo">
@@ -33,8 +33,9 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             >
               + Add Clothes
             </button>
-            <Link to="/">{currentUser?.name ?? "User"}</Link>{" "}
-            {/* Modified this line */}
+            <Link to="/" className="header__username">
+              {currentUser?.name ?? "User"}
+            </Link>{" "}
             <div>
               {currentUser?.avatar ? (
                 <img

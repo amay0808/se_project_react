@@ -1,10 +1,8 @@
 .profile-sidebar {
-  /* position: fixed; */
-  /* top: 47px;  */
   width: 229px;
   padding: 0 0 0 40px;
   margin: 0;
-  /* margin-top: 47px; */
+  margin-top: 47px;
 }
 
 .profile-sidebar__user-avatar {
@@ -23,13 +21,14 @@
   line-height: normal;
   margin: 0;
   padding: 0;
+  margin-left: 16px;
 }
 
 .profile-sidebar__info {
+  justify-content: flex-start;
   width: 229px;
   height: 56px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin: 0;
   padding: 0;

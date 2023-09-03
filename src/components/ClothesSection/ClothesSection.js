@@ -21,7 +21,7 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
   console.log("Clothing items:", clothingItems);
 
   if (!clothingItems || !currentUser) {
-    return <div></div>; // An empty div instead of "Loading..."
+    return <div></div>;
   }
 
   return (
