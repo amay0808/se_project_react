@@ -12,12 +12,9 @@ function SideBar({ user, openEditProfileModal, onSignOut }) {
 
   const { name, avatar: userAvatar } = user;
 
-  const handleLogout = () => {
-    if (typeof onSignOut === "function") {
-      onSignOut();
-    }
-
-    history.push("/");
+  const handleSignOut = () => {
+    onSignOut();
+    history.push("/"); // <-- Redirect to main page
   };
 
   return (
@@ -33,7 +30,7 @@ function SideBar({ user, openEditProfileModal, onSignOut }) {
       <button className="edit-profile-button" onClick={openEditProfileModal}>
         Change profile data
       </button>
-      <button className="sign-out-button" onClick={handleLogout}>
+      <button className="sign-out-button" onClick={handleSignOut}>
         {" "}
         {/* Updated */}
         Log Out
