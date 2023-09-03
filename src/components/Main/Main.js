@@ -52,7 +52,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems, onAddNewItem }) {
       <ClothesSection
         clothingItems={filteredCards}
         onSelectCard={onSelectCard}
-        onAddNewItem={onAddNewItem} // <-- Pass the function down as a prop here
+        onAddNewItem={onAddNewItem}
       />
       <section className="card_section" id="card-section">
         Today is {temp} {currentTemperatureUnit} / You may want to wear:

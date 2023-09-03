@@ -1,19 +1,30 @@
 import React from "react";
 import "./SideBar.css";
-import avatar from "../../components/images/avatar.svg"; // Update the path to match your directory structure
+import avatar from "../../components/images/avatar.svg";
+import { useHistory } from "react-router-dom"; //
 
 function SideBar({ user, openEditProfileModal, onSignOut }) {
+  const history = useHistory();
+
   if (!user) {
     return null;
   }
 
   const { name, avatar: userAvatar } = user;
 
+  const handleLogout = () => {
+    if (typeof onSignOut === "function") {
+      onSignOut();
+    }
+
+    history.push("/");
+  };
+
   return (
     <div className="profile-sidebar">
       <div className="profile-sidebar__info">
         <img
-          src={userAvatar || avatar} // Use userAvatar from database if available, else use local avatar
+          src={userAvatar || avatar}
           alt="User Avatar"
           className="sidebar-profile-avatar"
         />
@@ -22,7 +33,9 @@ function SideBar({ user, openEditProfileModal, onSignOut }) {
       <button className="edit-profile-button" onClick={openEditProfileModal}>
         Change profile data
       </button>
-      <button className="sign-out-button" onClick={onSignOut}>
+      <button className="sign-out-button" onClick={handleLogout}>
+        {" "}
+        {/* Updated */}
         Log Out
       </button>
     </div>
