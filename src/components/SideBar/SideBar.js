@@ -7,7 +7,7 @@ function SideBar({ user, openEditProfileModal, onSignOut }) {
     return null;
   }
 
-  const { username, avatar: userAvatar } = user;
+  const { name, avatar: userAvatar } = user;
 
   return (
     <div className="profile-sidebar">
@@ -17,7 +17,7 @@ function SideBar({ user, openEditProfileModal, onSignOut }) {
           alt="User Avatar"
           className="sidebar-profile-avatar"
         />
-        <h2 className="profile-sidebar__user-title">{username}</h2>
+        <h2 className="profile-sidebar__user-title">{name}</h2>
       </div>
       <button className="edit-profile-button" onClick={openEditProfileModal}>
         Change profile data

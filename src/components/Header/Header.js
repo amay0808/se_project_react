@@ -33,7 +33,8 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             >
               + Add Clothes
             </button>
-            <Link to="/">{currentUser?.username ?? "User"}</Link>{" "}
+            <Link to="/">{currentUser?.name ?? "User"}</Link>{" "}
+            {/* Modified this line */}
             <div>
               {currentUser?.avatar ? (
                 <img
