@@ -45,14 +45,25 @@ export function deleteItem(id) {
   });
 }
 // Function to update profile
+// Function to update profile
 export const updateProfile = async (userData) => {
+  // Keep all fields from userData, but transform 'avatarUrl' to 'avatar'
+  const transformedData = {
+    ...userData,
+    avatar: userData.avatarUrl,
+    name: userData.name, // <--- Include this
+  };
+
+  // Remove the 'avatarUrl' field, as the server doesn't recognize it
+  delete transformedData.avatarUrl;
+
   const response = await fetch("http://localhost:3001/users/me", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`, // Add token here
+      Authorization: `Bearer ${getToken()}`,
     },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(transformedData),
   });
 
   if (!response.ok) {
@@ -61,6 +72,7 @@ export const updateProfile = async (userData) => {
 
   return await response.json();
 };
+
 // PUT /items/:id/like
 export function addCardLike(id) {
   return fetch(`${baseUrl}/items/${id}/like`, {

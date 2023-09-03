@@ -66,3 +66,9 @@
   color: inherit;
   margin-top: 8px;
 }
+.sidebar-profile-avatar {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+}

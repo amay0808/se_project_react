@@ -36,9 +36,17 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
             <Link to="/">{currentUser?.username ?? "User"}</Link>{" "}
             <div>
               {currentUser?.avatar ? (
-                <img src={currentUser.avatar} alt="avatar" />
+                <img
+                  src={currentUser.avatar}
+                  alt="avatar"
+                  className="profile-avatar"
+                />
               ) : (
-                <img src={avatar} alt="User Avatar" />
+                <img
+                  src={avatar}
+                  alt="User avatar"
+                  className="profile-avatar"
+                />
               )}
             </div>
           </>

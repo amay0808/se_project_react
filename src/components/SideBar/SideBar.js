@@ -7,15 +7,15 @@ function SideBar({ user, openEditProfileModal, onSignOut }) {
     return null;
   }
 
-  const { username } = user;
+  const { username, avatar: userAvatar } = user;
 
   return (
     <div className="profile-sidebar">
       <div className="profile-sidebar__info">
         <img
-          src={avatar}
+          src={userAvatar || avatar} // Use userAvatar from database if available, else use local avatar
           alt="User Avatar"
-          className="profile-sidebar__user-avatar"
+          className="sidebar-profile-avatar"
         />
         <h2 className="profile-sidebar__user-title">{username}</h2>
       </div>
