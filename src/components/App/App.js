@@ -13,7 +13,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
-import { getUserDetail } from "../../ServerMiddleWares/auth";
+import { getUserDetail } from "../../ClientAuth.js/auth";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");

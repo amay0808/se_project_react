@@ -1,8 +1,9 @@
+import React, { useState, useEffect, useContext } from "react"; // <-- Added useState and useEffect
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./header.css";
 import { Link, useLocation } from "react-router-dom"; // <-- Add useLocation import
-import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { getForecastWeather } from "../../utils/weatherapi"; // Replace 'path/to/weather' with the actual relative path to your weather.js file.
 
 const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
@@ -14,6 +15,18 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
   });
 
   const avatar = require("../images/avatar.svg").default;
+  const [locationName, setLocationName] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const weatherData = await getForecastWeather();
+        setLocationName(weatherData.name);
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    })();
+  }, []);
 
   return (
     <header className="header">
@@ -22,6 +35,10 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
           <img src={require("../images/logo.svg").default} alt="logo" />
         </Link>
         <div>{`${currentDate},`}</div>
+        <div>
+          {locationName ? ` ${locationName}` : "Fetching location..."}
+        </div>{" "}
+        {/* Display location */}
       </div>
       <div className="header__avatar-logo">
         <ToggleSwitch />
@@ -34,7 +51,6 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
             >
               + Add Clothes
             </button>
-            {/* Set the Link's destination based on the current location */}
             <Link
               to={location.pathname === "/profile" ? "/" : "/profile"}
               className="header__username"
