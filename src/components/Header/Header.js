@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from "react"; // <-- Added useState and useEffect
+import React, { useState, useEffect, useContext } from "react";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./header.css";
-import { Link, useLocation } from "react-router-dom"; // <-- Add useLocation import
+import { Link, useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { getForecastWeather } from "../../utils/weatherapi"; // Replace 'path/to/weather' with the actual relative path to your weather.js file.
+import { getForecastWeather } from "../../utils/weatherapi";
 
 const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
-  const location = useLocation(); // <-- Use the hook
+  const location = useLocation();
 
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
@@ -38,7 +38,6 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
         <div>
           {locationName ? ` ${locationName}` : "Fetching location..."}
         </div>{" "}
-        {/* Display location */}
       </div>
       <div className="header__avatar-logo">
         <ToggleSwitch />
