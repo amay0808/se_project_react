@@ -47,6 +47,7 @@ export function postItem(item) {
 }
 
 // DELETE /items/:id
+// DELETE /items/:id
 export function deleteItem(id) {
   console.log("Deleting item with ID: ", id);
   return fetch(`${baseUrl}/items/${id}`, {
@@ -57,7 +58,10 @@ export function deleteItem(id) {
   }).then((response) => {
     console.log("Response object for DELETE /items/:id: ", response);
     if (!response.ok) {
-      throw new Error("Failed to delete item");
+      return response.json().then((errorInfo) => {
+        console.log("Server said:", errorInfo); // log server's error message
+        throw new Error("Failed to delete item");
+      });
     }
   });
 }

@@ -1,14 +1,18 @@
 import React, { useContext } from "react";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
-
 import { weatherOptions } from "../../utils/constants";
 
 const WeatherCard = ({ day, type, weatherTemp = "" }) => {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
-  // Find the correct image based on 'day' and 'type'
+  // Match the correct image based on 'day' and 'type'
   const imageSrc = weatherOptions.find((i) => i.day === day && i.type === type);
+  console.log("Day: ", day);
+  console.log("Type: ", type);
+  console.log("Matched image source object: ", imageSrc);
+
   const imageSrcUrl = imageSrc?.url || "";
+  console.log("Image source URL: ", imageSrcUrl);
 
   const displayTemperatureUnit = () => {
     if (currentTemperatureUnit === "F") {
@@ -24,11 +28,13 @@ const WeatherCard = ({ day, type, weatherTemp = "" }) => {
       <div className="weather_info">
         {weatherTemp} {displayTemperatureUnit()}
       </div>
-      <img
-        src={imageSrcUrl}
-        className="weather__image"
-        alt="weather condition"
-      />
+      {imageSrcUrl && (
+        <img
+          src={imageSrcUrl}
+          className="weather__image"
+          alt="weather condition"
+        />
+      )}
     </section>
   );
 };

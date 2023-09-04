@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { addCardLike, removeCardLike } from "../../utils/api";
 import "./itemCard.css";
-import LikeButtonIcon from "../images/Like-button.svg"; // for the "unliked" icon
-import LikedButtonIcon from "../images/Liked.svg"; // for the "liked" icon
+import LikeButtonIcon from "../images/Like-button.svg";
+import LikedButtonIcon from "../images/Liked.svg";
 
 function ItemCard({ onSelectCard, item, currentUser }) {
   const initialIsLiked =
@@ -39,16 +39,13 @@ function ItemCard({ onSelectCard, item, currentUser }) {
     return <div>Error: Item is not properly defined.</div>;
   }
 
-  // Choose the appropriate SVG icon for the like button based on the 'isLiked' state
   const currentLikeIcon = isLiked ? LikedButtonIcon : LikeButtonIcon;
 
   return (
     <div className="card-container">
       <div className="card">
         <div className="card__top-section">
-          {" "}
-          {/* Wrap card__text and the like button */}
-          <span className="card__text">{item.name}</span>
+          <span className="card__text-background">{item.name}</span>
           {currentUser && (
             <button
               className={isLiked ? "like-button active" : "like-button"}
@@ -62,6 +59,7 @@ function ItemCard({ onSelectCard, item, currentUser }) {
             </button>
           )}
         </div>
+
         <img
           src={item.imageUrl}
           className="card__image"

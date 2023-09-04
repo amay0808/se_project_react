@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./ClothesSection.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useLocation } from "react-router-dom"; // Import useLocation
+import { useLocation } from "react-router-dom";
 
 function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
-  const location = useLocation(); // Use the hook
+  const location = useLocation();
 
   // Debug logs
   console.log("=== ClothesSection Component Mounted ===");
@@ -48,7 +48,9 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
           .filter((item) => item?.owner === currentUser?._id)
           .map((item, index) => (
             <div key={item._id} className="card">
-              <span className="card__text">{item.name}</span>
+              <div className="card__top-section">
+                <span className="card__text-background">{item.name}</span>
+              </div>
               <img
                 className="card__image"
                 src={item.imageUrl}

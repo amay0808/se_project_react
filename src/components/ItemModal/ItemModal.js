@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext"; // Adjust the import path according to your project structure
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./itemModal.css";
 
 const ItemModal = ({ selectedCard, onClose, onDelete }) => {
@@ -27,7 +27,7 @@ const ItemModal = ({ selectedCard, onClose, onDelete }) => {
         ></button>
 
         <img
-          className="modal-image" // Add this line
+          className="modal-image"
           src={selectedCard.imageUrl || selectedCard.link}
           alt={selectedCard.name}
         />

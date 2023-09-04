@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-import "./Profile.css";
 import AddItemModal from "../AddItemModal/AddItemModal";
 
 function Profile({
@@ -12,8 +11,17 @@ function Profile({
   currentUser,
   onSignOut,
 }) {
+  // Debug log
+  console.log("=== Profile Component Mounted ===");
+  console.log("Initial clothingItems in Profile:", clothingItems);
+
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [isAddNewItemModalOpen, setIsAddNewItemModalOpen] = useState(false); // New state for add new item modal
+
+  // Debug log to capture updates
+  useState(() => {
+    console.log("clothingItems updated in Profile:", clothingItems);
+  }, [clothingItems]);
 
   const openEditProfileModal = () => {
     setIsEditProfileModalOpen(true);
