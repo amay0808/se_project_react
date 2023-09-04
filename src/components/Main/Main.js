@@ -4,6 +4,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import "./main.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Main({ weatherTemp, onSelectCard, clothingItems, onAddNewItem }) {
   console.log("=== Main Component Mounted ==="); // Log when the component is mounted
@@ -11,6 +12,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems, onAddNewItem }) {
 
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const temp = weatherTemp?.temperature?.[currentTemperatureUnit] || 999;
+  const { currentUser } = useContext(CurrentUserContext);
 
   const weatherType = useMemo(() => {
     if (currentTemperatureUnit === "F") {
@@ -58,7 +60,12 @@ function Main({ weatherTemp, onSelectCard, clothingItems, onAddNewItem }) {
         Today is {temp} {currentTemperatureUnit} / You may want to wear:
         <div className="card_items">
           {filteredCards.map((item, index) => (
-            <ItemCard key={index} item={item} onSelectCard={onSelectCard} />
+            <ItemCard
+              key={index}
+              item={item}
+              onSelectCard={onSelectCard}
+              currentUser={currentUser}
+            />
           ))}
         </div>
       </section>

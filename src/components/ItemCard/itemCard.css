@@ -6,7 +6,6 @@
 }
 
 .card {
-  /* flex: 1 0 auto; */
   width: 325px;
   height: 328px;
   border-radius: 19px;
@@ -30,10 +29,7 @@
   border-radius: 4px;
   padding: 2px 12px;
   margin: 0;
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-right: 10px; /* Add margin to the right */
 }
 
 .card__image {
@@ -43,4 +39,19 @@
   margin: 0;
   padding: 0;
   cursor: zoom-in;
+}
+
+.card__top-section {
+  display: flex;
+  justify-content: center; /* Changed to center */
+  align-items: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.like-button {
+  border: none;
+  cursor: pointer;
 }
