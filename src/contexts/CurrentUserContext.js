@@ -6,21 +6,29 @@ export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("currentUser");
-    console.log("Fetching user from storage: ", savedUser);
-    if (savedUser) {
-      setCurrentUser(JSON.parse(savedUser));
+    const token = localStorage.getItem("jwt");
+    if (token && currentUser == null) {
+      fetch("http://localhost:3001/users/me", {
+        // Replace with your actual API endpoint
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch user");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
-  }, []);
-
-  useEffect(() => {
-    // Save current user to local storage whenever it changes
-    if (currentUser) {
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    } else {
-      localStorage.removeItem("currentUser");
-    }
-  }, [currentUser]);
+  }, [currentUser]); // The dependency array includes 'currentUser' to avoid making multiple requests
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>

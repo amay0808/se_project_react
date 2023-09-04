@@ -11,9 +11,6 @@ const ModalWithForm = ({
 }) => {
   console.log("ModalWithForm onClose type:", typeof onClose);
 
-  // console.log("ModalWithForm"); // Debugging log
-  // console.log("ModalWithForm isOpen:", isOpen); // Debugging log
-
   if (!isOpen) {
     console.log("Modal is not open"); // Log if modal is not open
     return null;
@@ -34,7 +31,8 @@ const ModalWithForm = ({
         <form
           onSubmit={(e) => {
             console.log("Form submitted"); // Log form submission
-            onSubmit(e);
+            onSubmit(e); // Execute the onSubmit function passed as a prop
+            onClose(); // Close the modal
           }}
         >
           {children}

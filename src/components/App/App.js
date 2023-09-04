@@ -13,6 +13,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
+import { getUserDetail } from "../../ServerMiddleWares/auth";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -69,14 +70,8 @@ function App() {
         localStorage.setItem("jwt", data.token);
         setIsLoggedIn(true);
 
-        const userDetail = await fetch("http://localhost:3001/users/me", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        });
-
-        const userDetailData = await userDetail.json();
+        // Fetch user detail using middleware function
+        const userDetailData = await getUserDetail(data.token); // Modified this line to use getUserDetail
         console.log("Setting current user:", userDetailData);
         setCurrentUser(userDetailData);
 
@@ -130,31 +125,20 @@ function App() {
   };
 
   useEffect(() => {
-    // console.log("Initial currentUser:", currentUser);
     // Attempt to get token from local storage
     const token = localStorage.getItem("jwt");
     console.log("Retrieved token:", token);
-    // If token exists, validate it and set user data
+
+    // If token exists, validate it and set user data using the getUserDetail function
     if (token) {
-      fetch("http://localhost:3001/users/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Failed to validate token");
-          }
-          return res.json();
-        })
+      getUserDetail(token)
         .then((data) => {
           // Check if the data returned is valid (customize this based on your API's response)
           console.log("Token validation data:", data);
-          if (data && data.valid) {
+          if (data) {
+            // You might want to check other conditions, for example, if data.valid exists etc.
             setIsLoggedIn(true);
-            setCurrentUser(data.user);
+            setCurrentUser(data);
           } else {
             // If the token is invalid, remove it from local storage
             localStorage.removeItem("jwt");
@@ -191,7 +175,6 @@ function App() {
       );
   }, []);
 
-  // App.js
   const onAddItem = (values) => {
     console.log("onAddItem called with:", values);
     postItem(values)
