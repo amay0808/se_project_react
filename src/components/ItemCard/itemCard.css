@@ -29,7 +29,7 @@
   border-radius: 4px;
   padding: 2px 12px;
   margin: 0;
-  margin-right: 10px; /* Add margin to the right */
+  margin-right: 10px;
 }
 
 .card__image {
@@ -43,7 +43,7 @@
 
 .card__top-section {
   display: flex;
-  justify-content: center; /* Changed to center */
+  justify-content: center;
   align-items: center;
   position: absolute;
   top: 16px;
