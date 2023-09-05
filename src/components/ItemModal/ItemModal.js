@@ -5,15 +5,27 @@ import "./itemModal.css";
 const ItemModal = ({ selectedCard, onClose, onDelete }) => {
   const { currentUser } = useContext(CurrentUserContext);
 
+  console.log(
+    "Current User ID:",
+    currentUser ? currentUser._id : "No current user"
+  );
+  console.log(
+    "Selected Card Owner ID:",
+    selectedCard.owner ? selectedCard.owner._id : "No card owner"
+  );
+
   const isOwn =
-    selectedCard.owner && selectedCard.owner._id === currentUser._id;
+    selectedCard.owner &&
+    currentUser &&
+    selectedCard.owner._id === currentUser._id;
+
+  console.log("Is owner:", isOwn); // Debugging line
 
   const itemDeleteButtonClassName = `item__delete-button ${
     isOwn ? "item__delete-button_visible" : "item__delete-button_hidden"
   }`;
 
   const handleDelete = () => {
-    // console.log("Selected card details: ", selectedCard);
     onDelete(selectedCard._id);
   };
 

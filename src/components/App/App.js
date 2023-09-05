@@ -36,6 +36,7 @@ function App() {
   };
 
   const handleSelectedCard = (card) => {
+    console.log("Received card in handleSelectedCard: ", card);
     setActiveModal("preview");
     setSelectedCard(card);
   };
@@ -89,6 +90,7 @@ function App() {
         }
 
         const itemsData = await itemsResponse.json();
+        console.log("Fetched Items Data:", itemsData);
         setClothingItems(itemsData);
       }
     } catch (error) {

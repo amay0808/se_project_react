@@ -59,6 +59,7 @@ function Profile({
         clothingItems={clothingItems}
         onAddNewItem={openAddNewItemModal}
         onSelectCard={onSelectCard}
+        currentUser={currentUser} // Make sure you pass this down
       />
     </div>
   );

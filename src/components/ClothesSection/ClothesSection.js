@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./ClothesSection.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
+import ItemCard from "../ItemCard/ItemCard"; // Import ItemCard
 
 function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
   const location = useLocation();
@@ -47,21 +48,12 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
         {clothingItems
           .filter((item) => item?.owner === currentUser?._id)
           .map((item, index) => (
-            <div key={item._id} className="card">
-              <div className="card__top-section">
-                <span className="card__text-background">{item.name}</span>
-              </div>
-              <img
-                className="card__image"
-                src={item.imageUrl}
-                alt={item.name}
-                onClick={() => {
-                  if (typeof onSelectCard === "function") {
-                    onSelectCard(item);
-                  }
-                }}
-              />
-            </div>
+            <ItemCard
+              key={item._id}
+              item={item}
+              onSelectCard={onSelectCard}
+              currentUser={currentUser} // Pass down currentUser
+            />
           ))}
       </div>
     </div>
