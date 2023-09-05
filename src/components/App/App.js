@@ -180,7 +180,7 @@ function App() {
     postItem(values)
       .then((newItem) => {
         console.log("Added item:", newItem);
-        setClothingItems((prevItems) => [newItem, ...prevItems]);
+        setClothingItems((prevItems) => [newItem.data, ...prevItems]);
         handleCloseModal();
       })
       .catch((error) =>
