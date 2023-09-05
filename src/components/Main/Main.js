@@ -1,7 +1,6 @@
 import { useContext, useMemo } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
-// import ClothesSection from "../ClothesSection/ClothesSection";
 import "./main.css";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -51,11 +50,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems, onAddNewItem }) {
   return (
     <main className="main">
       <WeatherCard day={false} type="night" weatherTemp={temp} />
-      {/*<ClothesSection
-      clothingItems={filteredCards}
-      onSelectCard={onSelectCard}
-      onAddNewItem={onAddNewItem}
-    />*/}
+
       <section className="card_section" id="card-section">
         Today is {temp} {currentTemperatureUnit} / You may want to wear:
         <div className="card_items">
