@@ -52,7 +52,7 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
               key={item._id}
               item={item}
               onSelectCard={onSelectCard}
-              currentUser={currentUser} // Pass down currentUser
+              // Removed the currentUser prop, as it's no longer needed
             />
           ))}
       </div>

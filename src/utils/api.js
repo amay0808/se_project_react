@@ -1,19 +1,26 @@
+import { getUserDetail } from "./auth"; // Make sure the path to auth.js is correct
+
 const baseUrl = "http://localhost:3001";
 
 function getToken() {
   return localStorage.getItem("jwt");
 }
 
+function checkResponse(response) {
+  if (response.ok) {
+    return response.json();
+  }
+  return Promise.reject(`Error ${response.status}`);
+}
+
+function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 // GET /items
 export function getItems() {
   console.log("Fetching items...");
-  return fetch(`${baseUrl}/items/`).then((response) => {
-    console.log("GET /items response: ", response);
-    if (!response.ok) {
-      throw new Error("Failed to fetch items");
-    }
-    return response.json();
-  });
+  return request(`${baseUrl}/items/`);
 }
 
 // POST /items
@@ -22,35 +29,20 @@ export function postItem(item) {
   console.log("Token used for POST /items: ", token);
   console.log("Item payload: ", item);
 
-  return fetch(`${baseUrl}/items`, {
+  return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(item),
-  })
-    .then((response) => {
-      console.log("Response object for POST /items: ", response);
-      if (!response.ok) {
-        throw new Error("Failed to add item");
-      }
-      return response.json().then((data) => {
-        console.log("Response JSON for POST /items: ", data);
-        return data;
-      });
-    })
-    .catch((error) => {
-      console.error("Error in POST /items: ", error);
-      throw error;
-    });
+  });
 }
 
 // DELETE /items/:id
 export async function deleteItem(_id) {
   console.log("Deleting item with ID: ", _id);
-
-  const response = await fetch(`${baseUrl}/items/${_id}`, {
+  const response = await request(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${getToken()}`,
@@ -58,16 +50,6 @@ export async function deleteItem(_id) {
   });
 
   console.log("Response object for DELETE /items/:id: ", response);
-
-  if (response.status === 403) {
-    throw new Error("You are not authorized to delete this item");
-  }
-
-  if (!response.ok) {
-    const errorInfo = await response.json();
-    console.log("Server said:", errorInfo);
-    throw new Error("Failed to delete item");
-  }
 }
 
 // Function to update profile
@@ -81,7 +63,7 @@ export const updateProfile = async (userData) => {
 
   console.log("Updating profile with data: ", transformedData);
 
-  const response = await fetch(`${baseUrl}/users/me`, {
+  const response = await request(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -91,44 +73,103 @@ export const updateProfile = async (userData) => {
   });
 
   console.log("Response object for PATCH /users/me: ", response);
-
-  if (!response.ok) {
-    throw new Error("Failed to update profile");
-  }
-
-  return await response.json();
 };
 
 // PUT /items/:id/like
 export function addCardLike(id) {
   console.log("Adding like to card with ID: ", id);
-  return fetch(`${baseUrl}/items/${id}/like`, {
+  return request(`${baseUrl}/items/${id}/like`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
-  }).then((response) => {
-    console.log("Response object for PUT /items/:id/like: ", response);
-    if (!response.ok) {
-      throw new Error("Failed to like item");
-    }
-    return response.json();
   });
 }
 
 // DELETE /items/:id/like
 export function removeCardLike(id) {
   console.log("Removing like from card with ID: ", id);
-  return fetch(`${baseUrl}/items/${id}/like`, {
+  return request(`${baseUrl}/items/${id}/like`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
-  }).then((response) => {
-    console.log("Response object for DELETE /items/:id/like: ", response);
-    if (!response.ok) {
-      throw new Error("Failed to dislike item");
-    }
-    return response.json();
   });
 }
+// handleLogin with a callback to update state in App.js
+export const handleLogin = async (
+  userData,
+  setLoggedInCallback,
+  setCurrentUserCallback,
+  setClothingItemsCallback
+) => {
+  try {
+    const response = await fetch(`${baseUrl}/auth/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to log in");
+    }
+
+    const data = await response.json();
+    if (data.token) {
+      localStorage.setItem("jwt", data.token);
+      setLoggedInCallback(true); // Call the passed-in callback to update state
+
+      const userDetailData = await getUserDetail(data.token);
+      setCurrentUserCallback(userDetailData); // Call the passed-in callback to update state
+
+      const itemsResponse = await fetch(`${baseUrl}/items`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
+
+      if (!itemsResponse.ok) {
+        throw new Error("Failed to fetch items");
+      }
+
+      const itemsData = await itemsResponse.json();
+      setClothingItemsCallback(itemsData); // Call the passed-in callback to update state
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+
+// handleRegister with a callback
+export const handleRegister = async (
+  userData,
+  setLoggedInCallback,
+  setCurrentUserCallback
+) => {
+  try {
+    const response = await fetch(`${baseUrl}/users/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      if (response.status === 409) {
+        alert("Username or Email already exists");
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    }
+
+    const data = await response.json();
+    setLoggedInCallback(true); // Call the passed-in callback to update state
+    setCurrentUserCallback(data); // Call the passed-in callback to update state
+  } catch (error) {
+    console.error("Error occurred while creating user:", error);
+  }
+};

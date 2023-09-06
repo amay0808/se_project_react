@@ -11,10 +11,18 @@ import Profile from "../Profile/Profile";
 import LoginModal from "../LoginModal/LoginModal";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
-import { getItems, postItem, deleteItem } from "../../utils/api";
+import {
+  getItems,
+  postItem,
+  deleteItem,
+  handleLogin,
+  handleRegister,
+} from "../../utils/api";
 import "./app.css";
 import { getUserDetail } from "../../utils/auth";
-const baseUrl = "http://localhost:3001"; // Define the base URL
+// import { handleLogin, handleRegister } from "../../utils/api"; // Add these imports
+
+// const baseUrl = "http://localhost:3001"; // Define the base URL
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -24,6 +32,48 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = React.useState(false); // For loading state
+
+  // Function to pass as callback to handleLogin
+  const handleLoginCallback = (userData) => {
+    handleLogin(
+      userData,
+      setIsLoggedIn, // Callback to update isLoggedIn state
+      setCurrentUser, // Callback to update currentUser state
+      setClothingItems // Callback to update clothingItems state
+    );
+  };
+  const handleRegisterCallback = (userData) => {
+    handleRegister(
+      userData,
+      setIsLoggedIn, // Callback to update isLoggedIn state
+      setCurrentUser // Callback to update currentUser state
+    );
+  };
+
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+  // Universal handleSubmit function
+  const handleSubmit = (request) => {
+    setIsLoading(true);
+    request()
+      .then(handleCloseModal)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
 
   const handleCreateModal = () => {
     console.log("handleCreateModal() called in App.js"); // Added log
@@ -50,81 +100,6 @@ function App() {
     setCurrentUser,
     isLoggedIn,
     setIsLoggedIn,
-  };
-
-  const handleLogin = async (userData) => {
-    try {
-      // Existing login logic
-      const response = await fetch(`${baseUrl}/auth/signin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to log in");
-      }
-
-      const data = await response.json();
-      if (data.token) {
-        localStorage.setItem("jwt", data.token);
-        setIsLoggedIn(true);
-
-        // Fetch user detail using middleware function
-        const userDetailData = await getUserDetail(data.token); // Modified this line to use getUserDetail
-        console.log("Setting current user:", userDetailData);
-        setCurrentUser(userDetailData);
-
-        // Fetch items for the user after successful login
-        const itemsResponse = await fetch(`${baseUrl}/items`, {
-          // Update the URL as needed
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        });
-
-        if (!itemsResponse.ok) {
-          throw new Error("Failed to fetch items");
-        }
-
-        const itemsData = await itemsResponse.json();
-        console.log("Fetched Items Data:", itemsData);
-        setClothingItems(itemsData);
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
-
-  const handleRegister = async (userData) => {
-    try {
-      const response = await fetch(`${baseUrl}/users/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        if (response.status === 409) {
-          alert("Username or Email already exists");
-        } else {
-          throw new Error("Network response was not ok");
-        }
-      }
-
-      const data = await response.json();
-
-      return data;
-    } catch (error) {
-      console.error("Error occurred while creating user:", error);
-
-      throw error;
-    }
   };
 
   useEffect(() => {
@@ -179,16 +154,12 @@ function App() {
   }, []);
 
   const onAddItem = (values) => {
-    console.log("onAddItem called with:", values);
-    postItem(values)
-      .then((newItem) => {
-        console.log("Added item:", newItem);
+    // Use handleSubmit to call this logic
+    handleSubmit(() =>
+      postItem(values).then((newItem) => {
         setClothingItems((prevItems) => [newItem.data, ...prevItems]);
-        handleCloseModal();
       })
-      .catch((error) =>
-        console.error("Error occurred while adding item:", error)
-      );
+    );
   };
 
   const onDeleteItem = (_id) => {
@@ -246,8 +217,9 @@ function App() {
           <Footer />
           <LoginModal
             isOpen={activeModal === "login"}
-            onClose={() => setActiveModal("")}
-            onLogin={handleLogin}
+            onClose={handleCloseModal}
+            onLogin={handleLoginCallback} // Pass the callback function
+            buttonText={isLoading ? "Logging in..." : "Login"}
           />
           {activeModal === "create" && (
             <AddItemModal
@@ -266,7 +238,8 @@ function App() {
           <RegisterModal
             onClose={handleCloseModal}
             isOpen={activeModal === "signup"}
-            onSignup={handleRegister}
+            onSignup={handleRegisterCallback} // Pass the callback function
+            buttonText={isLoading ? "Registering..." : "Register"}
           />
         </div>
       </CurrentUserContext.Provider>
