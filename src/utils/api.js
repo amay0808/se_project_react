@@ -81,7 +81,7 @@ export const updateProfile = async (userData) => {
 
   console.log("Updating profile with data: ", transformedData);
 
-  const response = await fetch("http://localhost:3001/users/me", {
+  const response = await fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

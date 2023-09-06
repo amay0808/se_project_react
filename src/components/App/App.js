@@ -14,6 +14,7 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
 import { getUserDetail } from "../../ClientAuth.js/auth";
+const baseUrl = "http://localhost:3001"; // Define the base URL
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -54,7 +55,7 @@ function App() {
   const handleLogin = async (userData) => {
     try {
       // Existing login logic
-      const response = await fetch("http://localhost:3001/auth/signin", {
+      const response = await fetch(`${baseUrl}/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +78,7 @@ function App() {
         setCurrentUser(userDetailData);
 
         // Fetch items for the user after successful login
-        const itemsResponse = await fetch("http://localhost:3001/items", {
+        const itemsResponse = await fetch(`${baseUrl}/items`, {
           // Update the URL as needed
           method: "GET",
           headers: {
@@ -100,7 +101,7 @@ function App() {
 
   const handleRegister = async (userData) => {
     try {
-      const response = await fetch("http://localhost:3001/users/register", {
+      const response = await fetch(`${baseUrl}/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

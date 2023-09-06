@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-
+const baseUrl = "http://localhost:3001";
 export const CurrentUserContext = createContext(null);
 
 export const CurrentUserProvider = ({ children }) => {
@@ -8,7 +8,7 @@ export const CurrentUserProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token && currentUser == null) {
-      fetch("http://localhost:3001/users/me", {
+      fetch(`${baseUrl}/users/me`, {
         // Replace with your actual API endpoint
         method: "GET",
         headers: {
@@ -28,8 +28,7 @@ export const CurrentUserProvider = ({ children }) => {
           console.error("Error:", error);
         });
     }
-  }, [currentUser]); // The dependency array includes 'currentUser' to avoid making multiple requests
-
+  }, [currentUser]);
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       {children}

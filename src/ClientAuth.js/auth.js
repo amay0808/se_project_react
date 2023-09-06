@@ -1,7 +1,8 @@
-// Client-side auth.js
+const baseUrl = "http://localhost:3001";
+
 export const getUserDetail = async (token) => {
   try {
-    const response = await fetch("http://localhost:3001/users/me", {
+    const response = await fetch(`${baseUrl}/users/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
