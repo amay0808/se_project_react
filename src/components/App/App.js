@@ -13,7 +13,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getItems, postItem, deleteItem } from "../../utils/api";
 import "./app.css";
-import { getUserDetail } from "../../ClientAuth.js/auth";
+import { getUserDetail } from "../../utils/auth";
 const baseUrl = "http://localhost:3001"; // Define the base URL
 
 function App() {
