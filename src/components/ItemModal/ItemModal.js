@@ -7,17 +7,19 @@ const ItemModal = ({ selectedCard, onClose, onDelete }) => {
 
   console.log(
     "Current User ID:",
-    currentUser ? currentUser._id : "No current user"
+    currentUser ? currentUser.id : "No current user"
   );
   console.log(
     "Selected Card Owner ID:",
-    selectedCard.owner ? selectedCard.owner._id : "No card owner"
+    selectedCard && selectedCard.owner ? selectedCard.owner.id : "No card owner"
   );
 
+  // Check if currentUser, selectedCard, and selectedCard.owner are defined before comparing IDs
   const isOwn =
-    selectedCard.owner &&
     currentUser &&
-    selectedCard.owner._id === currentUser._id;
+    selectedCard &&
+    selectedCard.owner &&
+    currentUser.id === selectedCard.owner.id;
 
   console.log("Is owner:", isOwn); // Debugging line
 

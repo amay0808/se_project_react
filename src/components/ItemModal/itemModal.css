@@ -12,13 +12,12 @@
 .item__modal-content {
   background-color: white;
   position: relative;
-  width: 498px; /* Updated width */
-  height: 610px; /* Added height */
+  width: 498px;
+  height: 610px;
   max-width: 100%;
   border-radius: 20px;
   padding: 24px;
   overflow-y: auto;
-  /* max-height: calc(100% - 48px); Remove or comment this out */
   padding-bottom: 112px;
 }
 .item__delete-button {
@@ -34,6 +33,7 @@
   font-size: 20px;
   line-height: 24px;
   margin-bottom: 68px;
+  visibility: hidden;
 }
 .weather__type-text {
   font-family: "Cabinet Grotesk";
@@ -53,4 +53,10 @@
   width: 498px;
   height: 498px;
   object-fit: cover;
+}
+
+.item__delete-button_visible {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s, opacity 0.5s linear;
 }
