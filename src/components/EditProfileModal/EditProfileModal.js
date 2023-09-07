@@ -1,33 +1,42 @@
-import React, { useState, useContext } from "react";
-
+import React, { useState, useEffect, useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-
 import * as api from "../../utils/api";
 
 export default function EditProfileModal({ isOpen, onClose }) {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
-  const [name, setName] = useState(currentUser ? currentUser.name : "");
-
-  const [avatarUrl, setAvatarUrl] = useState(
-    currentUser ? currentUser.avatarUrl : ""
+  const [editedName, setEditedName] = useState(
+    currentUser ? currentUser.name : ""
+  );
+  const [editedAvatarUrl, setEditedAvatarUrl] = useState(
+    currentUser ? currentUser.avatar : ""
   );
 
-  const handleNameChange = (e) => setName(e.target.value);
+  useEffect(() => {
+    setEditedName(currentUser ? currentUser.name : "");
+    setEditedAvatarUrl(currentUser ? currentUser.avatar : "");
+  }, [currentUser]);
 
-  const handleAvatarUrlChange = (e) => setAvatarUrl(e.target.value);
+  const handleNameChange = (e) => setEditedName(e.target.value);
+  const handleAvatarUrlChange = (e) => setEditedAvatarUrl(e.target.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const updatedUser = await api.updateProfile({ name, avatarUrl });
+      const updatedUser = await api.updateProfile({
+        name: editedName,
+        avatarUrl: editedAvatarUrl,
+      });
 
-      setCurrentUser(updatedUser);
+      console.log("Updated user data:", updatedUser);
 
-      onClose();
+      setCurrentUser(updatedUser); // Update the context with the new user data
+
+      console.log("Context updated with new user data.");
+
+      onClose(); // Close the modal
     } catch (error) {
       console.log("Error updating profile:", error);
     }
@@ -43,22 +52,19 @@ export default function EditProfileModal({ isOpen, onClose }) {
     >
       <div className="input__group">
         <label className="input__label">Name*</label>
-
         <input
           className="form__input"
           type="text"
-          value={name}
+          value={editedName}
           onChange={handleNameChange}
         />
       </div>
-
       <div className="input__group">
         <label className="input__label">Avatar</label>
-
         <input
           className="form__input"
           type="text"
-          value={avatarUrl}
+          value={editedAvatarUrl} // Use editedAvatarUrl here
           onChange={handleAvatarUrlChange}
         />
       </div>
