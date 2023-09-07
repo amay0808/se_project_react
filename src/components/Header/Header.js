@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./header.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { getForecastWeather } from "../../utils/weatherapi";
+import avatar from "../images/avatar.svg";
+import logo from "../images/logo.svg";
+import { getForecastWeather } from "../../utils/weatherapi"; // Remove parseWeatherData import
 
-const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
+const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
-  const location = useLocation();
-
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  const avatar = require("../images/avatar.svg").default;
-  const [locationName, setLocationName] = useState("");
+  const [locationName, setLocationName] = useState(""); // Define locationName state
 
   useEffect(() => {
     (async () => {
       try {
         const weatherData = await getForecastWeather();
-        setLocationName(weatherData.name);
+        setLocationName(weatherData.name); // Set locationName
       } catch (error) {
         console.error("Error fetching weather data:", error);
       }
@@ -32,12 +31,10 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick }) => {
     <header className="header">
       <div className="header__logo">
         <Link to="/">
-          <img src={require("../images/logo.svg").default} alt="logo" />
+          <img src={logo} alt="logo" />
         </Link>
         <div>{`${currentDate},`}</div>
-        <div>
-          {locationName ? ` ${locationName}` : "Fetching location..."}
-        </div>{" "}
+        <div>{locationName}</div>
       </div>
       <div className="header__avatar-logo">
         <ToggleSwitch />

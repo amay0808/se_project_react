@@ -8,6 +8,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 function Main({ weatherTemp, onSelectCard, clothingItems, onAddNewItem }) {
   console.log("=== Main Component Mounted ==="); // Log when the component is mounted
   console.log("Initial Clothing Items in Main:", clothingItems); // Log the initial items
+  console.log("Received weatherTemp:", weatherTemp);
 
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const temp = weatherTemp?.temperature?.[currentTemperatureUnit] || 999;

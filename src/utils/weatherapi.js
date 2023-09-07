@@ -19,11 +19,12 @@ export const getForecastWeather = async () => {
     throw error;
   }
 };
-
 export const parseWeatherData = (data) => {
   const main = data.main;
   const temperature = main && main.temp;
+  const locationName = data.name; // assuming the name is stored in the 'name' key
   const weather = {
+    locationName, // add this line to include locationName in the returned object
     temperature: {
       F: Math.round(temperature),
       C: Math.round(((temperature - 32) * 5) / 9),

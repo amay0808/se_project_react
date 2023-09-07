@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -11,6 +10,7 @@ import Profile from "../Profile/Profile";
 import LoginModal from "../LoginModal/LoginModal";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
 import {
   getItems,
   postItem,
@@ -20,35 +20,23 @@ import {
 } from "../../utils/api";
 import "./app.css";
 import { getUserDetail } from "../../utils/auth";
-// import { handleLogin, handleRegister } from "../../utils/api"; // Add these imports
-
-// const baseUrl = "http://localhost:3001"; // Define the base URL
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
-  const [temp, setTemp] = useState(0);
+  const [temp, setTemp] = useState(0); // Uncomment temp state
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = React.useState(false); // For loading state
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  // Function to pass as callback to handleLogin
   const handleLoginCallback = (userData) => {
-    handleLogin(
-      userData,
-      setIsLoggedIn, // Callback to update isLoggedIn state
-      setCurrentUser, // Callback to update currentUser state
-      setClothingItems // Callback to update clothingItems state
-    );
+    handleLogin(userData, setIsLoggedIn, setCurrentUser, setClothingItems);
   };
+
   const handleRegisterCallback = (userData) => {
-    handleRegister(
-      userData,
-      setIsLoggedIn, // Callback to update isLoggedIn state
-      setCurrentUser // Callback to update currentUser state
-    );
+    handleRegister(userData, setIsLoggedIn, setCurrentUser);
   };
 
   useEffect(() => {
@@ -66,7 +54,7 @@ function App() {
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [activeModal]);
-  // Universal handleSubmit function
+
   const handleSubmit = (request) => {
     setIsLoading(true);
     request()
@@ -76,25 +64,22 @@ function App() {
   };
 
   const handleCreateModal = () => {
-    console.log("handleCreateModal() called in App.js"); // Added log
     setActiveModal("create");
-    console.log("Opening create modal");
   };
 
   const handleCloseModal = () => {
     setActiveModal("");
-    console.log("Closing active modal");
   };
 
   const handleSelectedCard = (card) => {
-    console.log("Received card in handleSelectedCard: ", card);
-    setActiveModal("preview");
     setSelectedCard(card);
+    setActiveModal("preview");
   };
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
+
   const currentUserContextValue = {
     currentUser,
     setCurrentUser,
@@ -103,22 +88,15 @@ function App() {
   };
 
   useEffect(() => {
-    // Attempt to get token from local storage
     const token = localStorage.getItem("jwt");
-    console.log("Retrieved token:", token);
 
-    // If token exists, validate it and set user data using the getUserDetail function
     if (token) {
       getUserDetail(token)
         .then((data) => {
-          // Check if the data returned is valid (customize this based on your API's response)
-          console.log("Token validation data:", data);
           if (data) {
-            // You might want to check other conditions, for example, if data.valid exists etc.
             setIsLoggedIn(true);
             setCurrentUser(data);
           } else {
-            // If the token is invalid, remove it from local storage
             localStorage.removeItem("jwt");
             setIsLoggedIn(false);
           }
@@ -135,18 +113,17 @@ function App() {
     getItems()
       .then((items) => {
         setClothingItems(items);
-        console.log("Current clothing items: ", items);
       })
       .catch((error) =>
         console.error("Error occurred while getting items:", error)
       );
   }, [isLoggedIn]);
+
   useEffect(() => {
-    getForecastWeather()
+    getForecastWeather() // Fetch weather data
       .then((data) => {
         const temperature = parseWeatherData(data);
-        console.log("Setting temperature to:", temperature); // Debugging log
-        setTemp(temperature);
+        setTemp(temperature); // Set the temperature in Fahrenheit
       })
       .catch((error) =>
         console.error("Error occurred while getting forecast weather:", error)
@@ -154,7 +131,6 @@ function App() {
   }, []);
 
   const onAddItem = (values) => {
-    // Use handleSubmit to call this logic
     handleSubmit(() =>
       postItem(values).then((newItem) => {
         setClothingItems((prevItems) => [newItem.data, ...prevItems]);
@@ -196,7 +172,6 @@ function App() {
           />
           <Switch>
             <Route path="/profile">
-              {console.log("Profile Route Accessed")}
               <Profile
                 currentUser={currentUser}
                 onSelectCard={handleSelectedCard}
@@ -218,7 +193,7 @@ function App() {
           <LoginModal
             isOpen={activeModal === "login"}
             onClose={handleCloseModal}
-            onLogin={handleLoginCallback} // Pass the callback function
+            onLogin={handleLoginCallback}
             buttonText={isLoading ? "Logging in..." : "Login"}
           />
           {activeModal === "create" && (
@@ -238,7 +213,7 @@ function App() {
           <RegisterModal
             onClose={handleCloseModal}
             isOpen={activeModal === "signup"}
-            onSignup={handleRegisterCallback} // Pass the callback function
+            onSignup={handleRegisterCallback}
             buttonText={isLoading ? "Registering..." : "Register"}
           />
         </div>

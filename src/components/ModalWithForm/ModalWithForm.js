@@ -28,11 +28,18 @@ const ModalWithForm = ({
           className="modal__close-button"
         ></button>
         <h3 className="modal__title">{title}</h3>
+
         <form
           onSubmit={(e) => {
             console.log("Form submitted"); // Log form submission
-            onSubmit(e); // Execute the onSubmit function passed as a prop
-            onClose(); // Close the modal
+            onSubmit(e)
+              .then(() => {
+                onClose(); // Close the modal only if the submission was successful
+              })
+              .catch((error) => {
+                console.error("Error in form submission:", error);
+                // Keep the modal open and display an error message
+              });
           }}
         >
           {children}
