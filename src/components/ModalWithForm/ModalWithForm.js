@@ -31,7 +31,10 @@ const ModalWithForm = ({
 
         <form
           onSubmit={(e) => {
+            e.preventDefault(); // Prevent the default form submission
             console.log("Form submitted"); // Log form submission
+
+            // Execute the onSubmit function passed as a prop, which should return a Promise
             onSubmit(e)
               .then(() => {
                 onClose(); // Close the modal only if the submission was successful

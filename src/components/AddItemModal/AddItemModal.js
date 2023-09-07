@@ -18,10 +18,21 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
     setWeatherType(e.target.value);
   };
   // AddItemModal
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log({ name, imageUrl: link, weather: weatherType });
-    onAddItem({ name, imageUrl: link, weather: weatherType });
+    try {
+      const result = await onAddItem({
+        name,
+        imageUrl: link,
+        weather: weatherType,
+      });
+      console.log("onAddItem result:", result);
+      handleCloseModal(); // Close the modal on success
+    } catch (error) {
+      console.error("Error in onAddItem:", error);
+      // Handle the error appropriately (e.g., display an error message)
+    }
   };
 
   return (

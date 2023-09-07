@@ -57,12 +57,21 @@ function App() {
 
   const handleSubmit = (request) => {
     setIsLoading(true);
-    request()
-      .then(handleCloseModal)
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
-  };
 
+    // Ensure that 'request' is a function and it returns a promise
+    if (typeof request === "function") {
+      request()
+        .then(handleCloseModal)
+        .catch((error) => {
+          console.error("Error:", error);
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      // Handle the case where 'request' is not a function returning a promise
+      console.error("Invalid request function");
+      setIsLoading(false);
+    }
+  };
   const handleCreateModal = () => {
     setActiveModal("create");
   };
