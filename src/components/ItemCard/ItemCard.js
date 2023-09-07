@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { addCardLike, removeCardLike } from "../../utils/api";
 import "./itemCard.css";
 import LikeButtonIcon from "../images/Like-button.svg";
 import LikedButtonIcon from "../images/Liked.svg";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function ItemCard({ onSelectCard, item, currentUser }) {
+function ItemCard({ onSelectCard, item }) {
+  const { currentUser } = useContext(CurrentUserContext);
+
   const initialIsLiked =
     item && item.likes && currentUser
       ? item.likes.some((_id) => _id === currentUser._id)

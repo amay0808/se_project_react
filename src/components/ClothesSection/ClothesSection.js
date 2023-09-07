@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "./ClothesSection.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
-import ItemCard from "../ItemCard/ItemCard"; // Import ItemCard
+import ItemCard from "../ItemCard/ItemCard";
 
 function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
   const location = useLocation();
@@ -48,12 +48,7 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
         {clothingItems
           .filter((item) => item?.owner === currentUser?._id)
           .map((item, index) => (
-            <ItemCard
-              key={item._id}
-              item={item}
-              onSelectCard={onSelectCard}
-              // Removed the currentUser prop, as it's no longer needed
-            />
+            <ItemCard key={item._id} item={item} onSelectCard={onSelectCard} />
           ))}
       </div>
     </div>
