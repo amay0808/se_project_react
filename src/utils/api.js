@@ -1,6 +1,5 @@
-import { getUserDetail } from "./auth"; // Make sure the path to auth.js is correct
-
-const baseUrl = "http://localhost:3001";
+import { getUserDetail } from "./auth";
+import { baseUrl } from "../contexts/CurrentUserContext";
 
 function getToken() {
   return localStorage.getItem("jwt");
@@ -19,15 +18,12 @@ function request(url, options) {
 
 // GET /items
 export function getItems() {
-  console.log("Fetching items...");
   return request(`${baseUrl}/items/`);
 }
 
 // POST /items
 export function postItem(item) {
   const token = getToken();
-  console.log("Token used for POST /items: ", token);
-  console.log("Item payload: ", item);
 
   return request(`${baseUrl}/items`, {
     method: "POST",
@@ -41,43 +37,43 @@ export function postItem(item) {
 
 // DELETE /items/:id
 export async function deleteItem(_id) {
-  console.log("Deleting item with ID: ", _id);
-  const response = await request(`${baseUrl}/items/${_id}`, {
+  return request(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-
-  console.log("Response object for DELETE /items/:id: ", response);
 }
 
-// Function to update profile
+// update Profile
 export const updateProfile = async (userData) => {
-  const transformedData = {
-    ...userData,
-    avatar: userData.avatarUrl,
-    name: userData.name,
-  };
-  delete transformedData.avatarUrl;
+  const { name, avatarUrl } = userData;
+  const transformedData = { name, avatar: avatarUrl };
 
-  console.log("Updating profile with data: ", transformedData);
+  try {
+    const response = await fetch(`${baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify(transformedData),
+    });
 
-  const response = await request(`${baseUrl}/users/me`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
-    },
-    body: JSON.stringify(transformedData),
-  });
+    if (!response.ok) {
+      throw new Error("Failed to update profile");
+    }
 
-  console.log("Response object for PATCH /users/me: ", response);
+    const updatedUser = await response.json();
+    return updatedUser;
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw error;
+  }
 };
 
 // PUT /items/:id/like
 export function addCardLike(id) {
-  console.log("Adding like to card with ID: ", id);
   return request(`${baseUrl}/items/${id}/like`, {
     method: "PUT",
     headers: {
@@ -88,7 +84,6 @@ export function addCardLike(id) {
 
 // DELETE /items/:id/like
 export function removeCardLike(id) {
-  console.log("Removing like from card with ID: ", id);
   return request(`${baseUrl}/items/${id}/like`, {
     method: "DELETE",
     headers: {
@@ -96,6 +91,7 @@ export function removeCardLike(id) {
     },
   });
 }
+
 // handleLogin with a callback to update state in App.js
 export const handleLogin = async (
   userData,
@@ -119,10 +115,10 @@ export const handleLogin = async (
     const data = await response.json();
     if (data.token) {
       localStorage.setItem("jwt", data.token);
-      setLoggedInCallback(true); // Call the passed-in callback to update state
+      setLoggedInCallback(true);
 
       const userDetailData = await getUserDetail(data.token);
-      setCurrentUserCallback(userDetailData); // Call the passed-in callback to update state
+      setCurrentUserCallback(userDetailData);
 
       const itemsResponse = await fetch(`${baseUrl}/items`, {
         method: "GET",
@@ -136,7 +132,7 @@ export const handleLogin = async (
       }
 
       const itemsData = await itemsResponse.json();
-      setClothingItemsCallback(itemsData); // Call the passed-in callback to update state
+      setClothingItemsCallback(itemsData);
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -167,8 +163,8 @@ export const handleRegister = async (
     }
 
     const data = await response.json();
-    setLoggedInCallback(true); // Call the passed-in callback to update state
-    setCurrentUserCallback(data); // Call the passed-in callback to update state
+    setLoggedInCallback(true);
+    setCurrentUserCallback(data);
   } catch (error) {
     console.error("Error occurred while creating user:", error);
   }

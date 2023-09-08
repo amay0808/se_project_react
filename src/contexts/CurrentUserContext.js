@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
-const baseUrl = "http://localhost:3001";
+
+export const baseUrl = "http://localhost:3001"; // Export baseUrl here
+
 export const CurrentUserContext = createContext(null);
 
 export const CurrentUserProvider = ({ children }) => {
@@ -9,7 +11,6 @@ export const CurrentUserProvider = ({ children }) => {
     const token = localStorage.getItem("jwt");
     if (token && currentUser == null) {
       fetch(`${baseUrl}/users/me`, {
-        // Replace with your actual API endpoint
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -29,6 +30,7 @@ export const CurrentUserProvider = ({ children }) => {
         });
     }
   }, [currentUser]);
+
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       {children}
