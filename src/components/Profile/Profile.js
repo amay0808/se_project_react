@@ -1,37 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // added useEffect for debug log
 
 import SideBar from "../SideBar/SideBar";
-
 import ClothesSection from "../ClothesSection/ClothesSection";
-
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-
 import AddItemModal from "../AddItemModal/AddItemModal";
 
 function Profile({
   clothingItems,
-
   onAddItem,
-
   onSelectCard,
-
   currentUser,
-
   onSignOut,
+  handleSubmit, // Pass handleSubmit function from App as a prop
 }) {
   // Debug log
-
   console.log("=== Profile Component Mounted ===");
-
   console.log("Initial clothingItems in Profile:", clothingItems);
 
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
-
   const [isAddNewItemModalOpen, setIsAddNewItemModalOpen] = useState(false); // New state for add new item modal
 
   // Debug log to capture updates
-
-  useState(() => {
+  useEffect(() => {
     console.log("clothingItems updated in Profile:", clothingItems);
   }, [clothingItems]);
 
@@ -59,9 +49,11 @@ function Profile({
         onSignOut={onSignOut}
       />
 
+      {/* Passing handleSubmit as a prop to EditProfileModal */}
       <EditProfileModal
         isOpen={isEditProfileModalOpen}
         onClose={closeEditProfileModal}
+        handleSubmit={handleSubmit} // Pass handleSubmit here
       />
 
       <AddItemModal

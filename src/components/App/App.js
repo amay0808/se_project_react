@@ -200,6 +200,7 @@ function App() {
                 clothingItems={clothingItems}
                 onAddItem={onAddItem}
                 onSignOut={handleSignOut}
+                handleSubmit={handleSubmit} // Pass handleSubmit down to Profile
               />
             </Route>
             <Route path="/">

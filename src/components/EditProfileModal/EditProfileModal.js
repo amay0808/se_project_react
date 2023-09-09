@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import * as api from "../../utils/api";
+import * as api from "../../utils/api"; // Ensure this is the correct path
 
-export default function EditProfileModal({ isOpen, onClose }) {
+// Accept handleSubmit as a new prop
+export default function EditProfileModal({ isOpen, onClose, handleSubmit }) {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const [editedName, setEditedName] = useState(
@@ -21,25 +22,23 @@ export default function EditProfileModal({ isOpen, onClose }) {
   const handleNameChange = (e) => setEditedName(e.target.value);
   const handleAvatarUrlChange = (e) => setEditedAvatarUrl(e.target.value);
 
-  const handleSubmit = async (e) => {
+  const customHandleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const updatedUser = await api.updateProfile({
-        name: editedName,
-        avatarUrl: editedAvatarUrl,
-      });
+    // Use passed handleSubmit function to wrap existing logic
+    handleSubmit(async () => {
+      try {
+        const updatedUser = await api.updateProfile({
+          name: editedName,
+          avatarUrl: editedAvatarUrl,
+        });
 
-      console.log("Updated user data:", updatedUser);
-
-      setCurrentUser(updatedUser); // Update the context with the new user data
-
-      console.log("Context updated with new user data.");
-
-      onClose(); // Close the modal
-    } catch (error) {
-      console.log("Error updating profile:", error);
-    }
+        setCurrentUser(updatedUser); // Update the context with the new user data
+        onClose(); // Close the modal
+      } catch (error) {
+        console.log("Error updating profile:", error);
+      }
+    });
   };
 
   return (
@@ -48,7 +47,7 @@ export default function EditProfileModal({ isOpen, onClose }) {
       buttonText="Save Changes"
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}
+      onSubmit={customHandleSubmit} // Use customHandleSubmit instead
     >
       <div className="input__group">
         <label className="input__label">Name*</label>
@@ -64,7 +63,7 @@ export default function EditProfileModal({ isOpen, onClose }) {
         <input
           className="form__input"
           type="text"
-          value={editedAvatarUrl} // Use editedAvatarUrl here
+          value={editedAvatarUrl}
           onChange={handleAvatarUrlChange}
         />
       </div>

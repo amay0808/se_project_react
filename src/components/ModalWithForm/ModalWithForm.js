@@ -12,7 +12,7 @@ const ModalWithForm = ({
   console.log("ModalWithForm onClose type:", typeof onClose);
 
   if (!isOpen) {
-    console.log("Modal is not open"); // Log if modal is not open
+    console.log("Modal is not open");
     return null;
   }
 
@@ -22,7 +22,7 @@ const ModalWithForm = ({
         <button
           type="button"
           onClick={() => {
-            console.log("Close button clicked"); // Log close button clicked
+            console.log("Close button clicked");
             onClose();
           }}
           className="modal__close-button"
@@ -31,10 +31,9 @@ const ModalWithForm = ({
 
         <form
           onSubmit={(e) => {
-            e.preventDefault(); // Prevent the default form submission
-            console.log("Form submitted"); // Log form submission
+            e.preventDefault();
+            console.log("Form submitted");
 
-            // Execute the onSubmit function passed as a prop, which should return a Promise
             onSubmit(e).then(() => {});
           }}
         >
