@@ -1,7 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-
-export const baseUrl = "http://localhost:3001"; // Export baseUrl here
-
+import { getUserDetail } from "../utils/auth";
 export const CurrentUserContext = createContext(null);
 
 export const CurrentUserProvider = ({ children }) => {
@@ -10,18 +8,7 @@ export const CurrentUserProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token && currentUser == null) {
-      fetch(`${baseUrl}/users/me`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch user");
-          }
-          return response.json();
-        })
+      getUserDetail(token)
         .then((data) => {
           setCurrentUser(data);
         })
@@ -37,3 +24,4 @@ export const CurrentUserProvider = ({ children }) => {
     </CurrentUserContext.Provider>
   );
 };
+export const baseUrl = "http://localhost:3001";
