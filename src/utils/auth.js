@@ -1,3 +1,5 @@
+import { checkResponse } from "./api"; // Import checkResponse from api.js
+
 const baseUrl = "http://localhost:3001";
 
 export const getUserDetail = (token) => {
@@ -6,11 +8,5 @@ export const getUserDetail = (token) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed to fetch user");
-    }
-    return response.json();
-  });
+  }).then(checkResponse);
 };
-
