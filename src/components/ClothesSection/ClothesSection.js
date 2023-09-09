@@ -5,7 +5,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
 import ItemCard from "../ItemCard/ItemCard";
 
-function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
+function ClothesSection({ clothingItems, onOpenAddItemModal, onSelectCard }) {
   const location = useLocation();
 
   // Debug logs
@@ -33,11 +33,7 @@ function ClothesSection({ clothingItems, onAddNewItem, onSelectCard }) {
             <h2 className="clothes__title">Your Items</h2>
             <button
               className="clothes__btn"
-              onClick={() => {
-                if (typeof onAddNewItem === "function") {
-                  onAddNewItem();
-                }
-              }}
+              onClick={onOpenAddItemModal} // Change this line
             >
               + Add New
             </button>

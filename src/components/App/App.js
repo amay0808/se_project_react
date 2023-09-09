@@ -11,8 +11,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
-
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute"; // <-- Update this path accordingly
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import {
   getItems,
@@ -203,7 +202,7 @@ function App() {
                   currentUser={currentUser}
                   onSelectCard={handleSelectedCard}
                   clothingItems={clothingItems}
-                  onAddItem={onAddItem}
+                  onOpenAddItemModal={handleCreateModal} // Add this line
                   onSignOut={handleSignOut}
                   handleSubmit={handleSubmit} // Pass handleSubmit down to Profile
                 />
