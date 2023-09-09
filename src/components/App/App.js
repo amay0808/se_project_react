@@ -12,6 +12,8 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
 
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute"; // <-- Update this path accordingly
+
 import {
   getItems,
   postItem,
@@ -193,16 +195,20 @@ function App() {
             location={locationName} // Pass locationName here
           />
           <Switch>
-            <Route path="/profile">
-              <Profile
-                currentUser={currentUser}
-                onSelectCard={handleSelectedCard}
-                clothingItems={clothingItems}
-                onAddItem={onAddItem}
-                onSignOut={handleSignOut}
-                handleSubmit={handleSubmit} // Pass handleSubmit down to Profile
-              />
-            </Route>
+            <ProtectedRoute
+              path="/profile"
+              isLoggedIn={isLoggedIn}
+              component={() => (
+                <Profile
+                  currentUser={currentUser}
+                  onSelectCard={handleSelectedCard}
+                  clothingItems={clothingItems}
+                  onAddItem={onAddItem}
+                  onSignOut={handleSignOut}
+                  handleSubmit={handleSubmit} // Pass handleSubmit down to Profile
+                />
+              )}
+            />
             <Route path="/">
               <Main
                 weatherTemp={temp}
@@ -212,6 +218,7 @@ function App() {
               />
             </Route>
           </Switch>
+
           <Footer />
           <LoginModal
             isOpen={activeModal === "login"}
