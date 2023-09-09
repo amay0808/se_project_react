@@ -35,14 +35,7 @@ const ModalWithForm = ({
             console.log("Form submitted"); // Log form submission
 
             // Execute the onSubmit function passed as a prop, which should return a Promise
-            onSubmit(e)
-              .then(() => {
-                onClose(); // Close the modal only if the submission was successful
-              })
-              .catch((error) => {
-                console.error("Error in form submission:", error);
-                // Keep the modal open and display an error message
-              });
+            onSubmit(e).then(() => {});
           }}
         >
           {children}
