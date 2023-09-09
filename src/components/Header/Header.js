@@ -1,11 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./header.css";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import avatar from "../images/avatar.svg";
 import logo from "../images/logo.svg";
-import { getForecastWeather } from "../../utils/weatherapi"; // Remove parseWeatherData import
 
 const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
@@ -14,19 +13,6 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
     day: "numeric",
   });
 
-  const [locationName, setLocationName] = useState(""); // Define locationName state
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const weatherData = await getForecastWeather();
-        setLocationName(weatherData.name); // Set locationName
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-      }
-    })();
-  }, []);
-
   return (
     <header className="header">
       <div className="header__logo">
@@ -34,7 +20,7 @@ const Header = ({ onCreateModal, onSignupClick, onLoginClick, location }) => {
           <img src={logo} alt="logo" />
         </Link>
         <div>{`${currentDate},`}</div>
-        <div>{locationName}</div>
+        <div>{location}</div> {/* Display location from the props */}
       </div>
       <div className="header__avatar-logo">
         <ToggleSwitch />

@@ -148,6 +148,19 @@ function App() {
     );
   };
 
+  const [locationName, setLocationName] = useState(""); // Define locationName state
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const weatherData = await getForecastWeather();
+        setLocationName(weatherData.name);
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    })();
+  }, []);
+
   const onDeleteItem = (_id) => {
     deleteItem(_id)
       .then(() => {
@@ -177,8 +190,7 @@ function App() {
             onCreateModal={handleCreateModal}
             onSignupClick={() => setActiveModal("signup")}
             onLoginClick={() => setActiveModal("login")}
-            location="Merced"
-            currentUser={currentUser}
+            location={locationName} // Pass locationName here
           />
           <Switch>
             <Route path="/profile">
