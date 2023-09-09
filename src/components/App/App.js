@@ -11,6 +11,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { getForecastWeather, parseWeatherData } from "../../utils/weatherapi";
+
 import {
   getItems,
   postItem,
