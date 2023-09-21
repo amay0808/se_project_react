@@ -1,4 +1,4 @@
-# WTWR (What to Wear?) - [Live Project](https://amay0808.github.io/se_project_react/)
+# WTWR (What to Wear?) - [Live Project](http://wtwr.styledcomputing.com)
 
 ## About the project
 
@@ -6,7 +6,11 @@ WTWR (What to Wear?) is a weather-based clothing recommendation application. The
 
 ## Project Live Link
 
-You can access the live project here: [https://amay0808.github.io/se_project_react/](https://amay0808.github.io/se_project_react/)
+You can access the live project here: [http://wtwr.styledcomputing.com](http://wtwr.styledcomputing.com)
+
+## API Access
+
+Access the API here: [http://api.wtwr.styledcomputing.com](http://api.wtwr.styledcomputing.com)
 
 ## Functionality
 
@@ -38,4 +42,4 @@ The application makes an API call to retrieve the daily weather forecast. The we
 ## Project Repositories
 
 - **Front-end**: This repository
-- **Back-end**: [se_project_express](https://github.com/amay0808/se_project_express.git)
+- **Back-end**: [se_project_express](http://github.com/amay0808/se_project_express.git)
