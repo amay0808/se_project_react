@@ -2,8 +2,8 @@ import { checkResponse } from "./api"; // Import checkResponse from api.js
 
 const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "http://api.wtwr.styledcomputing.com"
-    : "http://localhost:3001";
+    ? "https://api.wtwr.styledcomputing.com"
+    : "https://localhost:3001";
 
 export const getUserDetail = (token) => {
   return fetch(`${baseUrl}/users/me`, {
