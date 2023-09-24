@@ -24,4 +24,4 @@ export const CurrentUserProvider = ({ children }) => {
     </CurrentUserContext.Provider>
   );
 };
-export const baseUrl = "https://localhost:3001";
+export const baseUrl = "http://localhost:3001";
