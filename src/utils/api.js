@@ -82,7 +82,7 @@ export const handleLogin = async (
   setClothingItemsCallback
 ) => {
   try {
-    const data = await request(`${baseUrl}/auth/signin`, {
+    const data = await request(`${baseUrl}/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export const handleRegister = async (
   setCurrentUserCallback
 ) => {
   try {
-    const data = await request(`${baseUrl}/users/register`, {
+    const data = await request(`${baseUrl}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
