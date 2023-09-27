@@ -9,12 +9,18 @@ function RegisterModal({ isOpen, onClose, onSignup }) {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    try {
-      onSignup({ email, password, name, avatar });
-      onClose();
-    } catch (error) {
-      console.error("Failed to register", error);
-    }
+    // Return a new Promise
+    return new Promise((resolve, reject) => {
+      onSignup({ email, password, name, avatar })
+        .then(() => {
+          onClose();
+          resolve(); // Resolve the Promise when onSignup is successful
+        })
+        .catch((error) => {
+          console.error("Signup failed:", error);
+          reject(error); // Reject the Promise when onSignup fails
+        });
+    });
   };
 
   return (

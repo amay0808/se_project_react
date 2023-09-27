@@ -18,17 +18,15 @@ const AddItemModal = ({ handleCloseModal, onAddItem, isOpen }) => {
     setWeatherType(e.target.value);
   };
   // AddItemModal
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
+    //added promise
     e.preventDefault();
-    console.log({ name, imageUrl: link, weather: weatherType });
-    const result = await onAddItem({
+    return onAddItem({
       name,
       imageUrl: link,
       weather: weatherType,
     });
-    console.log("onAddItem result:", result);
   };
-
   return (
     <ModalWithForm
       title="New Garment"

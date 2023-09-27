@@ -102,8 +102,8 @@ export const handleLogin = async (
     console.error("An error occurred:", error);
   }
 };
-
 export const handleRegister = async (
+  //return promise
   userData,
   setLoggedInCallback,
   setCurrentUserCallback
@@ -119,10 +119,9 @@ export const handleRegister = async (
 
     setLoggedInCallback(true);
     setCurrentUserCallback(data);
+    return Promise.resolve(data); // Return a resolved Promise
   } catch (error) {
-    if (error.includes("409")) {
-      alert("Username or Email already exists");
-    }
     console.error("Error occurred while creating user:", error);
+    return Promise.reject(error); // Return a rejected Promise
   }
 };

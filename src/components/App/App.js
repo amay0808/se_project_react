@@ -34,11 +34,19 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleLoginCallback = (userData) => {
-    handleLogin(userData, setIsLoggedIn, setCurrentUser, setClothingItems);
+    return handleLogin(
+      userData,
+      setIsLoggedIn,
+      setCurrentUser,
+      setClothingItems
+    );
   };
 
   const handleRegisterCallback = (userData) => {
-    handleRegister(userData, setIsLoggedIn, setCurrentUser);
+    console.log(handleRegisterCallback); // Log handleRegisterCallback to see if it is defined
+
+    //return promise
+    return handleRegister(userData, setIsLoggedIn, setCurrentUser);
   };
 
   useEffect(() => {

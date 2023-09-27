@@ -7,15 +7,13 @@ function LoginModal({ isOpen, onClose, onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
+    //added promise
     e.preventDefault();
-    try {
-      await onLogin({ email, password });
+    return onLogin({ email, password }).then(() => {
       onClose();
       history.push("/profile");
-    } catch (error) {
-      console.error("Failed to login", error);
-    }
+    });
   };
 
   return (

@@ -22,22 +22,19 @@ export default function EditProfileModal({ isOpen, onClose, handleSubmit }) {
   const handleNameChange = (e) => setEditedName(e.target.value);
   const handleAvatarUrlChange = (e) => setEditedAvatarUrl(e.target.value);
 
-  const customHandleSubmit = async (e) => {
+  const customHandleSubmit = (e) => {
+    //added promise
     e.preventDefault();
-
-    // Use passed handleSubmit function to wrap existing logic
-    handleSubmit(async () => {
-      try {
-        const updatedUser = await api.updateProfile({
+    return handleSubmit(() => {
+      return api
+        .updateProfile({
           name: editedName,
           avatarUrl: editedAvatarUrl,
+        })
+        .then((updatedUser) => {
+          setCurrentUser(updatedUser);
+          onClose();
         });
-
-        setCurrentUser(updatedUser); // Update the context with the new user data
-        onClose(); // Close the modal
-      } catch (error) {
-        console.log("Error updating profile:", error);
-      }
     });
   };
 
