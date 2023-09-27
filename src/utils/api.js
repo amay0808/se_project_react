@@ -1,5 +1,11 @@
 import { getUserDetail } from "./auth";
-import { baseUrl } from "../contexts/CurrentUserContext";
+// import { baseUrl } from "../contexts/CurrentUserContext";
+
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwr.styledcomputing.com"
+    : "http://localhost:3001";
+
 function getToken() {
   return localStorage.getItem("jwt");
 }

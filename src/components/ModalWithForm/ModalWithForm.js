@@ -34,7 +34,18 @@ const ModalWithForm = ({
             e.preventDefault();
             console.log("Form submitted");
 
-            onSubmit(e).then(() => {});
+            const result = onSubmit(e);
+            if (result && typeof result.then === "function") {
+              result
+                .then(() => {
+                  console.log("onSubmit promise resolved");
+                })
+                .catch((err) => {
+                  console.error("Error occurred in onSubmit promise:", err);
+                });
+            } else {
+              console.warn("onSubmit did not return a promise");
+            }
           }}
         >
           {children}
