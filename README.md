@@ -1,43 +1,38 @@
 # WTWR (What to Wear?) - [Live Project](http://wtwr.styledcomputing.com)
 
-## About the project
+## About the Project
 
-WTWR (What to Wear?) is a weather-based clothing recommendation application. The project's goal is to provide users with suitable clothing recommendations based on the daily weather forecast.
+WTWR (What to Wear?) is a weather-based clothing recommendation application. The goal of this project is to assist users by providing suitable clothing recommendations derived from the daily weather forecast.
 
 ## Project Live Link
 
-You can access the live project here: [http://wtwr.styledcomputing.com](http://wtwr.styledcomputing.com)
-
-## API Access
-
-Access the API here: [http://api.wtwr.styledcomputing.com](http://api.wtwr.styledcomputing.com)
+Access the live project [here](http://wtwr.styledcomputing.com).
 
 ## Functionality
 
-The application makes an API call to retrieve the daily weather forecast. The weather data is then processed and analyzed to determine the appropriate clothing recommendations for the user. The recommendations take into account factors such as temperature, humidity, wind speed, and precipitation.
+The application utilizes an API to retrieve the daily weather forecast. This weather data is subsequently processed and analyzed to determine the most appropriate clothing recommendations for the user. The recommendations consider various factors, including temperature in both Celsius and Fahrenheit.
 
 ## Features
 
-- Fetches weather data from an API
-- Processes and analyzes weather data
-- Generates clothing recommendations based on the forecast
-- Displays the recommended clothing items to the user
-- User-friendly interface for easy navigation
+- Retrieves weather data from an API
+- Processes and analyzes the acquired weather data
+- Displays user-added recommended clothing items
+- Offers a user-friendly interface for seamless navigation
 
 ## Technologies Used
 
-- React
-- CSS
-- API integration
+- React for building the user interface
+- CSS for styling
+- API Integration for fetching weather data
 - Figma for design
+- Google Cloud for cloud services
 
 ## Usage
 
-1. Open the WTWR application.
-2. Allow the application to access your location or manually enter your location.
-3. The application will retrieve the weather forecast for your location.
-4. Based on the weather forecast, the application will recommend suitable clothing items for the day.
-5. View the recommended clothing items and choose your outfit accordingly.
+1. Launch the WTWR application.
+2. The application will automatically retrieve the weather forecast for your current location.
+3. The application will then present suitable clothing items based on the weather forecast.
+4. Review the recommended clothing items and select your outfit for the day accordingly.
 
 ## Project Repositories
 
