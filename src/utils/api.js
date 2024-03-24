@@ -1,5 +1,4 @@
 import { getUserDetail } from "./auth";
-// import { baseUrl } from "../contexts/CurrentUserContext";
 
 const baseUrl =
   process.env.NODE_ENV === "production"
