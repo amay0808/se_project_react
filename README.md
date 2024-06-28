@@ -1,12 +1,8 @@
-# WTWR (What to Wear?) - [Live Project](http://wtwr.styledcomputing.com)
+# WTWR (What to Wear?) 
 
 ## About the Project
 
 WTWR (What to Wear?) is a weather-based clothing recommendation application. The goal of this project is to assist users by providing suitable clothing recommendations derived from the daily weather forecast.
-
-## Project Live Link
-
-Access the live project [here](http://wtwr.styledcomputing.com).
 
 ## Functionality
 
